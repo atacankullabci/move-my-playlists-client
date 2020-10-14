@@ -15,10 +15,11 @@ export class AppComponent {
 
   onFilePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.fileService.addPost(file);
+    //this.fileService.addPost(file);
+    this.fileService.sendFile(file);
   }
 
   goToAuthPage() {
-    window.location.href = 'https://accounts.spotify.com/authorize?client_id=3b696f6fb5244a5e8dc40af0d20c6322&response_type=code&redirect_uri=https%3A%2F%2Fwww.atacankullabci.com&scope=user-library-modify';
+    window.location.href = 'https://accounts.spotify.com/authorize?response_type=code&client_id=b5ead0205230451d877d487a856a30a9&redirect_uri=http%3A%2F%2Fimovin.club%2Fcallback%2F&scope=user-library-modify';
   }
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +9,16 @@ export class FileService {
   constructor(private http: HttpClient) {
   }
 
-  addPost(fileContent: File) {
-    let headers = new HttpHeaders();
-    headers = headers.set('Content-Type', 'text/xml');
+  sendFile(fileContent: File) {
+    const endpointDev = 'http://localhost:8080/api/map';
+    const endpointProd = 'http://imovin.club/api/map';
 
-    return this.http.post<any>('http://localhost:8080/api/map', fileContent, {headers})
+    const formData: FormData = new FormData();
+    formData.append('file', fileContent);
+
+    return this.http.post<any>(endpointDev, formData)
       .subscribe((response) => {
-        console.log(response)
+        console.log(response);
       });
   }
-
 }
