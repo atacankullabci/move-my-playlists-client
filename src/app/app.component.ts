@@ -14,6 +14,7 @@ import {MatSort} from "@angular/material/sort";
 export class AppComponent implements OnInit {
   title = 'im-movin-client';
   isMediaContentReceived = false;
+  showSpinnerOverlay = false;
   clientIP: string;
 
   mediaContents: IMediaContent[];
@@ -41,12 +42,14 @@ export class AppComponent implements OnInit {
   }
 
   onFilePicked(event: Event) {
+    this.showSpinnerOverlay = true;
     const file = (event.target as HTMLInputElement).files[0];
     this.fileService.sendFile(file)
       .subscribe((response: IMediaContent[]) => {
         this.mediaContents = response;
         if (this.mediaContents) {
           this.isMediaContentReceived = true;
+          this.showSpinnerOverlay = false;
         }
         this.prepareTable();
       });
