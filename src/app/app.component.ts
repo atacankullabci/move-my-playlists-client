@@ -1,22 +1,36 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FileService} from "./file.service";
+import {IpService} from "./ip.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'im-movin-client';
+  isMediaContentReceived = false;
+  clientIP: string;
 
-  constructor(private fileService: FileService) {
+  constructor(private fileService: FileService,
+              private ipService: IpService) {
   }
 
+  ngOnInit() {
+    this.ipService.getIPAddress()
+      .subscribe((response: any) => {
+        this.clientIP = response.ip;
+      });
+  }
 
   onFilePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
     //this.fileService.addPost(file);
     this.fileService.sendFile(file);
+  }
+
+  health() {
+    this.fileService.checkHealth();
   }
 
   goToAuthPage() {

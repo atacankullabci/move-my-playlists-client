@@ -16,7 +16,17 @@ export class FileService {
     const formData: FormData = new FormData();
     formData.append('file', fileContent);
 
-    return this.http.post<any>(endpointDev, formData)
+    return this.http.post<any>(endpointProd, formData)
+      .subscribe((response) => {
+        console.log(response);
+      });
+  }
+
+  checkHealth() {
+    const endpointDev = 'http://localhost:8080/api/health';
+    const endpointProd = 'http://imovin.club/api/health';
+
+    return this.http.get<string>(endpointProd)
       .subscribe((response) => {
         console.log(response);
       });
