@@ -16,10 +16,7 @@ export class FileService {
     const formData: FormData = new FormData();
     formData.append('file', fileContent);
 
-    return this.http.post<any>(endpointProd, formData)
-      .subscribe((response) => {
-        console.log(response);
-      });
+    return this.http.post<any>(endpointDev, formData);
   }
 
   checkHealth() {
