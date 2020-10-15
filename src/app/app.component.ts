@@ -52,6 +52,11 @@ export class AppComponent implements OnInit {
       });
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   health() {
     this.fileService.checkHealth();
   }

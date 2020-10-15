@@ -31,6 +31,10 @@
   </mat-tab>
   <mat-tab label="Tracks in Your Library" [disabled]="!isMediaContentReceived">
     <div class="mat-elevation-z8">
+      <mat-form-field>
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Fleetwood Mac" #input>
+      </mat-form-field>
       <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="trackName">
           <th mat-header-cell *matHeaderCellDef>Song</th>
@@ -47,6 +51,10 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
       </table>
 
       <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
