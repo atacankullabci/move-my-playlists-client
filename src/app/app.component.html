@@ -13,7 +13,7 @@
   <mat-tab label="Export the iTunes Library">
     <mat-card>
       <mat-card-title>
-        Im Movin' app provides you to migrate your iTunes library to Spotify
+        Im Movin' app helps you to migrate your iTunes library to Spotify
       </mat-card-title>
       <mat-card-content>
         All you need to do is following:
@@ -25,7 +25,12 @@
       </mat-card-content>
       <button mat-stroked-button type="button" color="primary" (click)="filePicker.click()">Select File</button>
       <input type="file" #filePicker (change)="onFilePicked($event)">
+
+      <button mat-stroked-button color="primary" (click)="health()">Health</button>
     </mat-card>
+  </mat-tab>
+  <mat-tab label="Tracks in Your Library" [disabled]="!isMediaContentReceived">
+
   </mat-tab>
 </mat-tab-group>
 
