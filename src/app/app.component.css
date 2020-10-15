@@ -6,3 +6,7 @@ mat-tab-group {
 input[type="file"] {
   visibility: hidden;
 }
+
+table {
+  width: 100%;
+}

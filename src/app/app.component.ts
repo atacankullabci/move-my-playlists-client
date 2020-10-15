@@ -1,6 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FileService} from "./file.service";
 import {IpService} from "./ip.service";
+import {IMediaContent, MediaContent} from "./media-content.model";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-root',
@@ -11,6 +15,13 @@ export class AppComponent implements OnInit {
   title = 'im-movin-client';
   isMediaContentReceived = false;
   clientIP: string;
+
+  mediaContents: IMediaContent[];
+  displayedColumns: string[] = ['trackName', 'artistName', 'albumName'];
+
+  dataSource = new MatTableDataSource<MediaContent>();
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private fileService: FileService,
               private ipService: IpService) {
@@ -23,10 +34,22 @@ export class AppComponent implements OnInit {
       });
   }
 
+  prepareTable() {
+    this.dataSource = new MatTableDataSource(this.mediaContents);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   onFilePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
-    //this.fileService.addPost(file);
-    this.fileService.sendFile(file);
+    this.fileService.sendFile(file)
+      .subscribe((response: IMediaContent[]) => {
+        this.mediaContents = response;
+        if (this.mediaContents) {
+          this.isMediaContentReceived = true;
+        }
+        this.prepareTable();
+      });
   }
 
   health() {
