@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
   onFilePicked(event: Event) {
     this.showSpinnerOverlay = true;
     const file = (event.target as HTMLInputElement).files[0];
-    this.fileService.sendFile(file)
+    this.fileService.sendFile(file, this.clientIP)
       .subscribe((response: IMediaContent[]) => {
         this.mediaContents = response;
         if (this.mediaContents) {
