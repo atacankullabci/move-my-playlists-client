@@ -1,10 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FileService} from "./file.service";
 import {IpService} from "./ip.service";
-import {IMediaContent, MediaContent} from "./media-content.model";
+import {IMediaContent, MediaContent} from "./shared/media-content.model";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
+import {ActivatedRoute} from "@angular/router";
+import {IUserInfo, UserInfo} from "./shared/user-info.model";
 
 @Component({
   selector: 'app-root',
@@ -16,6 +18,11 @@ export class AppComponent implements OnInit {
   isMediaContentReceived = false;
   showSpinnerOverlay = false;
   clientIP: string;
+  code: string;
+  contentBadge = 0;
+
+  //user-info
+  userInfo: IUserInfo;
 
   mediaContents: IMediaContent[];
   displayedColumns: string[] = ['trackName', 'artistName', 'albumName'];
@@ -24,11 +31,17 @@ export class AppComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private fileService: FileService,
+  constructor(private route: ActivatedRoute,
+              private fileService: FileService,
               private ipService: IpService) {
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.code = params['code'];
+      this.userInfo = new UserInfo(params['username'], params['externalUrl']);
+    });
+
     this.ipService.getIPAddress()
       .subscribe((response: any) => {
         this.clientIP = response.ip;
@@ -51,6 +64,7 @@ export class AppComponent implements OnInit {
           this.isMediaContentReceived = true;
           this.showSpinnerOverlay = false;
         }
+        this.contentBadge = this.mediaContents.length;
         this.prepareTable();
       });
   }

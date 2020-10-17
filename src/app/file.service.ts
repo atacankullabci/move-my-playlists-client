@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {IMediaContent} from "./media-content.model";
+import {IMediaContent} from "./shared/media-content.model";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class FileService {
   }
 
   sendFile(fileContent: File, clientIp: string) {
-    //const endpointDev = 'http://localhost:8080/api/map';
+    const endpointDev = 'http://localhost:8080/api/map';
     const endpointProd = 'http://imovin.club/api/map';
 
     const headers = new HttpHeaders({
@@ -21,7 +21,7 @@ export class FileService {
     const formData: FormData = new FormData();
     formData.append('file', fileContent);
 
-    return this.http.post<IMediaContent[]>(endpointProd, formData, {headers: headers});
+    return this.http.post<IMediaContent[]>(endpointDev, formData, {headers: headers});
   }
 
   checkHealth() {

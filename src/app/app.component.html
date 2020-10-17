@@ -1,7 +1,8 @@
 <app-header></app-header>
-<mat-tab-group>
+<mat-tab-group dynamicHeight>
   <mat-tab label="Authorize Im Movin' App on Spotify">
-    <mat-card>
+    <app-user-info *ngIf="userInfo.externalUrl && userInfo.externalUrl" [userInfo]="userInfo"></app-user-info>
+    <mat-card *ngIf="!userInfo.externalUrl && !userInfo.externalUrl">
       <mat-card-title>
         Im Movin' App needs a permission from your spotify account to modify your library.
       </mat-card-title>
@@ -10,26 +11,31 @@
       </mat-card-content>
     </mat-card>
   </mat-tab>
-  <mat-tab label="Export the iTunes Library">
+  <mat-tab label="Import your iTunes Library" [disabled]="!userInfo.externalUrl && !userInfo.externalUrl">
     <mat-card>
       <mat-card-title>
-        Im Movin' app helps you to migrate your iTunes library to Spotify
+        Upload your iTunes library
       </mat-card-title>
+      <mat-divider></mat-divider>
       <mat-card-content>
-        All you need to do is following:
-        <ol>
-          <li>Open your iTunes</li>
-          <li>File > Library > Export Library</li>
-          <li>Upload the exported "Library.xml" file to Im Movin' App</li>
-        </ol>
+        <mat-list>
+          <mat-list-item role="listitem">1. Open your iTunes</mat-list-item>
+          <mat-list-item role="listitem">2. File > Library > Export Library</mat-list-item>
+          <mat-list-item role="listitem">3. Upload the exported "Library.xml" file to Im Movin' App</mat-list-item>
+        </mat-list>
       </mat-card-content>
-      <button mat-stroked-button type="button" color="primary" (click)="filePicker.click()">Select File</button>
+      <button mat-stroked-button type="button" color="primary" (click)="filePicker.click()">Upload File</button>
       <input type="file" #filePicker (change)="onFilePicked($event)">
-
-      <button mat-stroked-button color="primary" (click)="health()">Health</button>
     </mat-card>
   </mat-tab>
-  <mat-tab label="Tracks in Your Library" [disabled]="!isMediaContentReceived">
+  <mat-tab [disabled]="!isMediaContentReceived">
+    <ng-template mat-tab-label>
+      <span style="min-width: 10px"
+            matBadge="{{contentBadge}}"
+            class="stretch-badge"
+            matBadgeOverlap="false"
+            [matBadgeHidden]="contentBadge === 0">Tracks in Your Library</span>
+    </ng-template>
     <div class="mat-elevation-z8">
       <mat-form-field>
         <mat-label>Search</mat-label>
@@ -56,11 +62,11 @@
           <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
         </tr>
       </table>
-
       <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
     </div>
   </mat-tab>
 </mat-tab-group>
+
 
 <div class="overlay" *ngIf="showSpinnerOverlay">
   <div class="center">
