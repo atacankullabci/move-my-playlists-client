@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-card-title>
+    <mat-icon>play_arrow</mat-icon>
+    User Info
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item role="listitem">
+        <mat-icon>person</mat-icon>
+        <b>Spotify Username : </b> {{userInfo.username}}
+      </mat-list-item>
+      <mat-list-item role="listitem">
+        <mat-icon>link</mat-icon>
+        <b>External URL : </b> {{userInfo.externalUrl}}
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
