@@ -10,18 +10,20 @@ export class FileService {
   constructor(private http: HttpClient) {
   }
 
-  sendFile(fileContent: File, clientIp: string) {
-    const endpointDev = 'http://localhost:8080/api/map';
+  sendFile(fileContent: File, clientIp: string, username: string, externalUrl: string) {
+    //const endpointDev = 'http://localhost:8080/api/map';
     const endpointProd = 'http://imovin.club/api/map';
 
     const headers = new HttpHeaders({
-      'client-ip': clientIp
+      'client-ip': clientIp,
+      'username': username,
+      'external-url': externalUrl
     });
 
     const formData: FormData = new FormData();
     formData.append('file', fileContent);
 
-    return this.http.post<IMediaContent[]>(endpointDev, formData, {headers: headers});
+    return this.http.post<IMediaContent[]>(endpointProd, formData, {headers: headers});
   }
 
   checkHealth() {

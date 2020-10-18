@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
   isMediaContentReceived = false;
   showSpinnerOverlay = false;
   clientIP: string;
-  code: string;
   contentBadge = 0;
 
   //user-info
@@ -38,7 +37,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.code = params['code'];
       this.userInfo = new UserInfo(params['username'], params['externalUrl']);
     });
 
@@ -57,7 +55,7 @@ export class AppComponent implements OnInit {
   onFilePicked(event: Event) {
     this.showSpinnerOverlay = true;
     const file = (event.target as HTMLInputElement).files[0];
-    this.fileService.sendFile(file, this.clientIP)
+    this.fileService.sendFile(file, this.clientIP, this.userInfo.username, this.userInfo.externalUrl)
       .subscribe((response: IMediaContent[]) => {
         this.mediaContents = response;
         if (this.mediaContents) {
