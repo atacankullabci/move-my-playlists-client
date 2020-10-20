@@ -11,6 +11,11 @@ table {
   width: 100%;
 }
 
+#disclaimer {
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
 .mat-form-field {
   margin-top: 15px;
   font-size: 14px;
