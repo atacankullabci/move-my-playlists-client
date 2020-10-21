@@ -7,6 +7,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute} from "@angular/router";
 import {IUserInfo, UserInfo} from "./shared/user-info.model";
+import {UserService} from "./user.service";
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
   showSpinnerOverlay = false;
   clientIP: string;
   contentBadge = 0;
+  isUserValid: boolean = false;
 
   //user-info
   userInfo: IUserInfo;
@@ -32,12 +34,23 @@ export class AppComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private fileService: FileService,
-              private ipService: IpService) {
+              private ipService: IpService,
+              private userService: UserService) {
   }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.userInfo = new UserInfo(params['username'], params['externalUrl']);
+      if (params['username'] && params['externalUrl'] && params['code']) {
+        this.userInfo = new UserInfo(params['username'], params['externalUrl'], params['code']);
+        this.userService.checkUser(this.userInfo)
+          .subscribe((response) => {
+            if (response.status === 200) {
+              this.isUserValid = true;
+            } else {
+              this.isUserValid = false;
+            }
+          });
+      }
     });
 
     this.ipService.getIPAddress()
