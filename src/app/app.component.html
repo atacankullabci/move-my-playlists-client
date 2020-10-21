@@ -20,8 +20,8 @@
 
 <mat-tab-group dynamicHeight>
   <mat-tab label="Authorize Im Movin' App on Spotify">
-    <app-user-info *ngIf="userInfo.externalUrl && userInfo.externalUrl" [userInfo]="userInfo"></app-user-info>
-    <mat-card *ngIf="!userInfo.externalUrl && !userInfo.externalUrl">
+    <app-user-info *ngIf="isUserValid" [userInfo]="userInfo"></app-user-info>
+    <mat-card *ngIf="!isUserValid">
       <mat-card-title>
         Im Movin' App needs a permission from your spotify account to modify your library.
       </mat-card-title>
@@ -30,7 +30,7 @@
       </mat-card-content>
     </mat-card>
   </mat-tab>
-  <mat-tab label="Import your iTunes Library" [disabled]="!userInfo.externalUrl && !userInfo.externalUrl">
+  <mat-tab label="Import your iTunes Library" [disabled]="!isUserValid">
     <mat-card>
       <mat-card-title>
         Upload your iTunes library
