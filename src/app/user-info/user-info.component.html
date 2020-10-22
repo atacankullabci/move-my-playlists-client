@@ -1,9 +1,10 @@
-<mat-card>
-  <mat-card-title>
-    <mat-icon>play_arrow</mat-icon>
-    User Info
-  </mat-card-title>
-  <mat-divider></mat-divider>
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>User Info</mat-card-title>
+  </mat-card-header>
+  <img *ngIf="userInfo.userImage.url" src="{{userInfo.userImage.url}}"
+       alt="User Photo"
+       style="margin-left: 15px; border-radius: 50px; height: 100px; width: 100px">
   <mat-card-content>
     <mat-list>
       <mat-list-item role="listitem">

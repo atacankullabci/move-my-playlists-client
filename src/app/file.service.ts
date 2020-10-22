@@ -11,7 +11,7 @@ export class FileService {
   }
 
   sendFile(fileContent: File, clientIp: string, username: string, externalUrl: string) {
-    //const endpointDev = 'http://localhost:8080/api/map';
+    const endpointDev = 'http://localhost:8080/api/map';
     const endpointProd = 'http://imovin.club/api/map';
 
     const headers = new HttpHeaders({
