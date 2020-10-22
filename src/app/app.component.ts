@@ -6,7 +6,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute} from "@angular/router";
-import {IUserInfo, UserInfo} from "./shared/user-info.model";
+import {IUserInfo} from "./shared/user-info.model";
 import {UserService} from "./user.service";
 
 @Component({
@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   clientIP: string;
   contentBadge = 0;
   isUserValid: boolean = false;
+  userId: string;
 
   //user-info
   userInfo: IUserInfo;
@@ -40,12 +41,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      if (params['username'] && params['externalUrl'] && params['code']) {
-        this.userInfo = new UserInfo(params['username'], params['externalUrl'], params['code']);
-        this.userService.checkUser(this.userInfo)
+      if (params['id']) {
+        this.userId = params['id'];
+        this.userService.checkUser(this.userId)
           .subscribe((response) => {
             if (response.status === 200) {
-              this.userInfo.userImage = response.body;
+              this.userInfo = response.body;
               this.isUserValid = true;
             } else {
               this.userInfo.userImage = null;
@@ -70,16 +71,18 @@ export class AppComponent implements OnInit {
   onFilePicked(event: Event) {
     this.showSpinnerOverlay = true;
     const file = (event.target as HTMLInputElement).files[0];
-    this.fileService.sendFile(file, this.clientIP, this.userInfo.username, this.userInfo.externalUrl)
-      .subscribe((response: IMediaContent[]) => {
-        this.mediaContents = response;
-        if (this.mediaContents) {
-          this.isMediaContentReceived = true;
-          this.showSpinnerOverlay = false;
-        }
-        this.contentBadge = this.mediaContents.length;
-        this.prepareTable();
-      });
+    if (this.userId) {
+      this.fileService.sendFile(file, this.clientIP, this.userId)
+        .subscribe((response: IMediaContent[]) => {
+          this.mediaContents = response;
+          if (this.mediaContents) {
+            this.isMediaContentReceived = true;
+            this.showSpinnerOverlay = false;
+          }
+          this.contentBadge = this.mediaContents.length;
+          this.prepareTable();
+        });
+    }
   }
 
   applyFilter(event: Event) {

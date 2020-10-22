@@ -10,14 +10,13 @@ export class FileService {
   constructor(private http: HttpClient) {
   }
 
-  sendFile(fileContent: File, clientIp: string, username: string, externalUrl: string) {
+  sendFile(fileContent: File, clientIp: string, id: string) {
     const endpointDev = 'http://localhost:8080/api/map';
     const endpointProd = 'http://imovin.club/api/map';
 
     const headers = new HttpHeaders({
       'client-ip': clientIp,
-      'username': username,
-      'external-url': externalUrl
+      'id': id
     });
 
     const formData: FormData = new FormData();
