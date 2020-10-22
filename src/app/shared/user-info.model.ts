@@ -3,7 +3,6 @@ import {IUserImage} from "./user-image.model";
 export interface IUserInfo {
   username?: string;
   externalUrl?: string;
-  code?: string;
   userImage?: IUserImage;
 }
 

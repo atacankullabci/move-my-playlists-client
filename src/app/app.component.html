@@ -20,32 +20,36 @@
 
 <mat-tab-group dynamicHeight>
   <mat-tab label="Authorize Im Movin' App on Spotify">
-    <app-user-info *ngIf="isUserValid" [userInfo]="userInfo"></app-user-info>
-    <mat-card *ngIf="!isUserValid">
-      <mat-card-title>
-        Im Movin' App needs a permission from your spotify account to modify your library.
-      </mat-card-title>
-      <mat-card-content>
-        <button mat-stroked-button type="button" color="primary" (click)="goToAuthPage()">Give Permission</button>
-      </mat-card-content>
-    </mat-card>
+    <div class="mat-elevation-z8" style="margin: 30px">
+      <app-user-info *ngIf="isUserValid" [userInfo]="userInfo"></app-user-info>
+      <mat-card *ngIf="!isUserValid">
+        <mat-card-title>
+          Im Movin' App needs a permission from your spotify account to modify your library.
+        </mat-card-title>
+        <mat-card-content>
+          <button mat-stroked-button type="button" color="primary" (click)="goToAuthPage()">Give Permission</button>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </mat-tab>
   <mat-tab label="Import your iTunes Library" [disabled]="!isUserValid">
-    <mat-card>
-      <mat-card-title>
-        Upload your iTunes library
-      </mat-card-title>
-      <mat-divider></mat-divider>
-      <mat-card-content>
-        <mat-list>
-          <mat-list-item role="listitem">1. Open your iTunes</mat-list-item>
-          <mat-list-item role="listitem">2. File > Library > Export Library</mat-list-item>
-          <mat-list-item role="listitem">3. Upload the exported "Library.xml" file to Im Movin' App</mat-list-item>
-        </mat-list>
-      </mat-card-content>
-      <button mat-stroked-button type="button" color="primary" (click)="filePicker.click()">Upload File</button>
-      <input type="file" #filePicker (change)="onFilePicked($event)">
-    </mat-card>
+    <div class="mat-elevation-z8" style="margin: 30px">
+      <mat-card>
+        <mat-card-title>
+          Upload your iTunes library
+        </mat-card-title>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item role="listitem">1. Open your iTunes</mat-list-item>
+            <mat-list-item role="listitem">2. File > Library > Export Library</mat-list-item>
+            <mat-list-item role="listitem">3. Upload the exported "Library.xml" file to Im Movin' App</mat-list-item>
+          </mat-list>
+        </mat-card-content>
+        <button mat-stroked-button type="button" color="primary" (click)="filePicker.click()">Upload File</button>
+        <input type="file" #filePicker (change)="onFilePicked($event)">
+      </mat-card>
+    </div>
   </mat-tab>
   <mat-tab [disabled]="!isMediaContentReceived">
     <ng-template mat-tab-label>
@@ -55,7 +59,7 @@
             matBadgeOverlap="false"
             [matBadgeHidden]="contentBadge === 0">Tracks in Your Library</span>
     </ng-template>
-    <div class="mat-elevation-z8">
+    <div class="mat-elevation-z8" style="margin: 30px">
       <mat-accordion class="example-headers-align">
         <mat-expansion-panel hideToggle>
           <mat-expansion-panel-header>
