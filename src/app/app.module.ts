@@ -21,6 +21,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatBadgeModule} from "@angular/material/badge";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {MatBadgeModule} from "@angular/material/badge";
     BrowserAnimationsModule,
     MatDividerModule,
     MatBadgeModule,
+    MatExpansionModule,
     MatIconModule,
     MatListModule,
     MatToolbarModule,

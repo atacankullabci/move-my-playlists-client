@@ -45,8 +45,10 @@ export class AppComponent implements OnInit {
         this.userService.checkUser(this.userInfo)
           .subscribe((response) => {
             if (response.status === 200) {
+              this.userInfo.userImage = response.body;
               this.isUserValid = true;
             } else {
+              this.userInfo.userImage = null;
               this.isUserValid = false;
             }
           });
