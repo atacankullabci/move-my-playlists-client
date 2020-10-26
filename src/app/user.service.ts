@@ -18,7 +18,7 @@ export class UserService {
       'id': userId
     });
 
-    return this.http.get<IUserInfo>(endpointProd, {headers: headers, observe: 'response'});
+    return this.http.get<IUserInfo>(endpointDev, {headers: headers, observe: 'response'});
   }
 
 }

@@ -61,7 +61,7 @@
     </ng-template>
     <div class="mat-elevation-z8" style="margin: 30px">
       <mat-accordion class="example-headers-align">
-        <mat-expansion-panel hideToggle>
+        <mat-expansion-panel hideToggle style="margin-bottom: 5px">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Tracks in Your Library
@@ -115,9 +115,12 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <p>Please be aware that this last piece of process may result a clutter in your Spotify Library.</p>
-          <button mat-stroked-button type="button" color="primary">Start Migration</button>
+          <button mat-stroked-button type="button" color="primary" (click)="migrate()">Start Migration</button>
         </mat-expansion-panel>
       </mat-accordion>
+      <table *ngFor="let a of unmatchedMediaContents">
+        <td>{{a.trackName}}</td>
+      </table>
     </div>
   </mat-tab>
 </mat-tab-group>

@@ -23,10 +23,10 @@ export class AppComponent implements OnInit {
   isUserValid: boolean = false;
   userId: string;
 
-  //user-info
   userInfo: IUserInfo;
 
   mediaContents: IMediaContent[];
+  unmatchedMediaContents: IMediaContent[];
   displayedColumns: string[] = ['trackName', 'artistName', 'albumName', 'genre'];
 
   dataSource = new MatTableDataSource<MediaContent>();
@@ -83,6 +83,13 @@ export class AppComponent implements OnInit {
           this.prepareTable();
         });
     }
+  }
+
+  migrate() {
+    this.fileService.migrate(this.userId)
+      .subscribe((resp) => {
+        this.unmatchedMediaContents = resp;
+      });
   }
 
   applyFilter(event: Event) {
