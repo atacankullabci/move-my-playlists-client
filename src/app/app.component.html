@@ -103,7 +103,7 @@
           <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
         </mat-expansion-panel>
       </mat-accordion>
-      <mat-accordion class="example-headers-align">
+      <mat-accordion class="example-headers-align" *ngIf="!migrationCompleted">
         <mat-expansion-panel hideToggle>
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -114,51 +114,29 @@
               <mat-icon>playlist_add</mat-icon>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <mat-card class="mat-elevation-z8" style="margin: 30px" *ngIf="!migrationCompleted">
-            <mat-card-header>
-              <p>Please be aware that this last piece of process may result a clutter in your Spotify Library.</p>
-            </mat-card-header>
-            <mat-card-content>
-              <button mat-stroked-button type="button" color="primary" (click)="migrate()">Start Migration</button>
-            </mat-card-content>
-          </mat-card>
-
-          <mat-card class="mat-elevation-z8" style="margin: 30px" *ngIf="migrationCompleted">
-            <mat-card-header>
-              Migration is completed. Here are the items that could not be matched in the Spotify library.
-            </mat-card-header>
-            <mat-card-content>
-              <mat-form-field>
-                <mat-label>Search</mat-label>
-                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Fleetwood Mac" #input>
-              </mat-form-field>
-              <table mat-table [dataSource]="unmatchedDataSource" matSort>
-                <ng-container matColumnDef="trackName">
-                  <th mat-header-cell *matHeaderCellDef>Song</th>
-                  <td mat-cell *matCellDef="let element"> {{element.trackName}} </td>
-                </ng-container>
-                <ng-container matColumnDef="artistName">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Artist</th>
-                  <td mat-cell *matCellDef="let element"> {{element.artistName}} </td>
-                </ng-container>
-                <ng-container matColumnDef="albumName">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Album</th>
-                  <td mat-cell *matCellDef="let element"> {{element.albumName}} </td>
-                </ng-container>
-                <ng-container matColumnDef="genre">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Genre</th>
-                  <td mat-cell *matCellDef="let element"> {{element.genre}} </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-                <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-                </tr>
-              </table>
-            </mat-card-content>
-          </mat-card>
+          <button mat-stroked-button type="button" color="primary" (click)="migrate()">Start Migration</button>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-accordion class="example-headers-align" *ngIf="migrationCompleted">
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              You have been migrated
+            </mat-panel-title>
+            <mat-panel-description>
+              Here are the tracks that could not be matched
+              <mat-icon>done_all</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div *ngIf="unmatchedMediaContents.length > 0">
+            <mat-list *ngFor="let item of unmatchedMediaContents">
+              <mat-list-item>{{item.trackName}} {{item.artistName}} {{item.albumName}}</mat-list-item>
+              <mat-divider></mat-divider>
+            </mat-list>
+          </div>
+          <p *ngIf="unmatchedMediaContents.length < 1">
+            All tracks have been matched successfully
+          </p>
         </mat-expansion-panel>
       </mat-accordion>
     </div>

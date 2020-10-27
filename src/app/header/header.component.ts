@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from "@angular/material/dialog";
+import {DisclaimerDialogComponent} from "../shared/disclaimer-dialog/disclaimer-dialog.component";
 
 @Component({
   selector: 'app-header',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
   }
 
+  openDialog() {
+    this.dialog.open(DisclaimerDialogComponent);
+  }
 }
