@@ -3,8 +3,23 @@
     <a routerLink="/">Im Movin'</a>
   </span>
   <span class="spacer"></span>
-  <span>
-    <a mat-button routerLinkActive="mat-warn" href="https:/atacankullabci.com">Creator</a>
-  </span>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>notifications_active</mat-icon>
+      <span>
+        <a (click)="openDialog()" style="color: black">Disclaimer</a>
+      </span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>code</mat-icon>
+      <span>
+        <a routerLinkActive="mat-warn" href="https:/atacankullabci.com" style="color: black">Creator</a>
+      </span>
+    </button>
+  </mat-menu>
 </mat-toolbar>
 

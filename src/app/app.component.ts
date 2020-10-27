@@ -8,6 +8,8 @@ import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute} from "@angular/router";
 import {IUserInfo} from "./shared/user-info.model";
 import {UserService} from "./user.service";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogComponent} from "./shared/dialog/dialog.component";
 
 @Component({
   selector: 'app-root',
@@ -31,7 +33,6 @@ export class AppComponent implements OnInit {
   displayedColumns: string[] = ['trackName', 'artistName', 'albumName', 'genre'];
 
   dataSource = new MatTableDataSource<MediaContent>();
-  unmatchedDataSource = new MatTableDataSource<MediaContent>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -39,7 +40,8 @@ export class AppComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private fileService: FileService,
               private ipService: IpService,
-              private userService: UserService) {
+              private userService: UserService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -71,12 +73,6 @@ export class AppComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  prepareUnmatchedTable() {
-    this.unmatchedDataSource = new MatTableDataSource(this.unmatchedMediaContents);
-    this.unmatchedDataSource.paginator = this.paginator;
-    this.unmatchedDataSource.sort = this.sort;
-  }
-
   onFilePicked(event: Event) {
     this.showSpinnerOverlay = true;
     const file = (event.target as HTMLInputElement).files[0];
@@ -95,14 +91,20 @@ export class AppComponent implements OnInit {
   }
 
   migrate() {
-    this.showSpinnerOverlay = true;
-    this.fileService.migrate(this.userId)
-      .subscribe((resp) => {
-        this.unmatchedMediaContents = resp;
-        this.prepareUnmatchedTable();
-        this.migrationCompleted = true;
-        this.showSpinnerOverlay = false;
-      });
+    const dialogRef = this.dialog.open(DialogComponent);
+
+    dialogRef.afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.showSpinnerOverlay = true;
+          this.fileService.migrate(this.userId)
+            .subscribe((resp) => {
+              this.unmatchedMediaContents = resp;
+              this.migrationCompleted = true;
+              this.showSpinnerOverlay = false;
+            });
+        }
+      })
   }
 
   applyFilter(event: Event) {

@@ -22,22 +22,30 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatBadgeModule} from "@angular/material/badge";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {MatDialogModule} from "@angular/material/dialog";
+import {DialogComponent} from './shared/dialog/dialog.component';
+import {MatMenuModule} from "@angular/material/menu";
+import {DisclaimerDialogComponent} from './shared/disclaimer-dialog/disclaimer-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    DialogComponent,
+    DisclaimerDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatMenuModule,
     MatDividerModule,
     MatBadgeModule,
     MatExpansionModule,
     MatIconModule,
     MatListModule,
+    MatDialogModule,
     MatToolbarModule,
     MatTabsModule,
     MatTableModule,
