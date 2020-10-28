@@ -22,7 +22,7 @@ export class FileService {
     const formData: FormData = new FormData();
     formData.append('file', fileContent);
 
-    return this.http.post<IMediaContent[]>(dev, formData, {headers: headers});
+    return this.http.post<IMediaContent[]>(prod, formData, {headers: headers});
   }
 
   migrate(id: string) {
@@ -33,14 +33,14 @@ export class FileService {
       'id': id
     });
 
-    return this.http.post<boolean>(dev, null, {headers: headers});
+    return this.http.post<boolean>(prod, null, {headers: headers});
   }
 
   checkHealth() {
-    //const endpointDev = 'http://localhost:8080/api/health';
-    const endpointProd = 'https://imovin.club/api/health';
+    //const dev = 'http://localhost:8080/api/health';
+    const prod = 'https://imovin.club/api/health';
 
-    return this.http.get<string>(endpointProd)
+    return this.http.get<string>(prod)
       .subscribe((response) => {
         console.log(response);
       });
