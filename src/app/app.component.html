@@ -1,23 +1,5 @@
 <app-header></app-header>
 
-<mat-card id="disclaimer" *ngIf="false">
-  <mat-card-header>
-    <mat-card-title>Disclaimer</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <ul>
-      <li>
-        <p>
-          This website does not focus to effectuate competition between two music platforms.
-          I, as a creator of this website, am using iTunes music platform for more than 4 years
-          and I had no issues with this platform. I just want to try out the Spotify while not wasting
-          my time to find and add all the musics in my iTunes library.
-        </p>
-      </li>
-    </ul>
-  </mat-card-content>
-</mat-card>
-
 <mat-tab-group dynamicHeight>
   <mat-tab label="Authorize Im Movin' App on Spotify">
     <div class="mat-elevation-z8" style="margin: 30px">
@@ -121,22 +103,14 @@
         <mat-expansion-panel hideToggle>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              You have been migrated
+              You have been started migration of {{this.mediaContents.length}} tracks
             </mat-panel-title>
             <mat-panel-description>
-              Here are the tracks that could not be matched
+              <mat-progress-bar mode="indeterminate" style="width:80% !important;"></mat-progress-bar>
               <mat-icon>done_all</mat-icon>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <div *ngIf="unmatchedMediaContents.length > 0">
-            <mat-list *ngFor="let item of unmatchedMediaContents">
-              <mat-list-item>{{item.trackName}} {{item.artistName}} {{item.albumName}}</mat-list-item>
-              <mat-divider></mat-divider>
-            </mat-list>
-          </div>
-          <p *ngIf="unmatchedMediaContents.length < 1">
-            All tracks have been matched successfully
-          </p>
+          According to your library size, this process might take a while. Please, check your spotify library.
         </mat-expansion-panel>
       </mat-accordion>
     </div>
