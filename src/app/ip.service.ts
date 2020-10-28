@@ -10,6 +10,6 @@ export class IpService {
   }
 
   public getIPAddress() {
-    return this.http.get("http://api.ipify.org/?format=json");
+    return this.http.get("https://api.ipify.org/?format=json");
   }
 }

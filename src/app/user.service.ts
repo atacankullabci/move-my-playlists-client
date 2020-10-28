@@ -11,14 +11,14 @@ export class UserService {
   }
 
   checkUser(userId: string) {
-    const endpointDev = 'http://localhost:8080/api/users';
-    const endpointProd = 'http://imovin.club/api/users';
+    const dev = 'https://localhost:8080/api/users';
+    const prod = 'https://imovin.club/api/users';
 
     const headers = new HttpHeaders({
       'id': userId
     });
 
-    return this.http.get<IUserInfo>(endpointDev, {headers: headers, observe: 'response'});
+    return this.http.get<IUserInfo>(prod, {headers: headers, observe: 'response'});
   }
 
 }
