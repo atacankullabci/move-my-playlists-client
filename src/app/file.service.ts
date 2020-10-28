@@ -11,7 +11,7 @@ export class FileService {
   }
 
   sendFile(fileContent: File, clientIp: string, id: string) {
-    const dev = 'https://localhost:8080/api/map';
+    const dev = 'http://localhost:8080/api/map';
     const prod = 'https://imovin.club/api/map';
 
     const headers = new HttpHeaders({
@@ -22,22 +22,22 @@ export class FileService {
     const formData: FormData = new FormData();
     formData.append('file', fileContent);
 
-    return this.http.post<IMediaContent[]>(prod, formData, {headers: headers});
+    return this.http.post<IMediaContent[]>(dev, formData, {headers: headers});
   }
 
   migrate(id: string) {
-    const dev = 'https://localhost:8080/api/migrate';
+    const dev = 'http://localhost:8080/api/migrate';
     const prod = 'https://imovin.club/api/migrate';
 
     const headers = new HttpHeaders({
       'id': id
     });
 
-    return this.http.post<IMediaContent[]>(prod, null, {headers: headers});
+    return this.http.post<boolean>(dev, null, {headers: headers});
   }
 
   checkHealth() {
-    //const endpointDev = 'https://localhost:8080/api/health';
+    //const endpointDev = 'http://localhost:8080/api/health';
     const endpointProd = 'https://imovin.club/api/health';
 
     return this.http.get<string>(endpointProd)

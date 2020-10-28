@@ -29,7 +29,6 @@ export class AppComponent implements OnInit {
   userInfo: IUserInfo;
 
   mediaContents: IMediaContent[];
-  unmatchedMediaContents: IMediaContent[];
   displayedColumns: string[] = ['trackName', 'artistName', 'albumName', 'genre'];
 
   dataSource = new MatTableDataSource<MediaContent>();
@@ -99,9 +98,10 @@ export class AppComponent implements OnInit {
           this.showSpinnerOverlay = true;
           this.fileService.migrate(this.userId)
             .subscribe((resp) => {
-              this.unmatchedMediaContents = resp;
-              this.migrationCompleted = true;
-              this.showSpinnerOverlay = false;
+              if (resp) {
+                this.migrationCompleted = true;
+                this.showSpinnerOverlay = false;
+              }
             });
         }
       })
