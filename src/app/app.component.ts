@@ -10,6 +10,8 @@ import {IUserInfo} from "./shared/user-info.model";
 import {UserService} from "./user.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "./shared/dialog/dialog.component";
+import {MatTabChangeEvent} from "@angular/material/tabs";
+import {InProgressDialogComponent} from "./shared/in-progress-dialog/in-progress-dialog.component";
 
 @Component({
   selector: 'app-root',
@@ -25,6 +27,7 @@ export class AppComponent implements OnInit {
   isUserValid: boolean = false;
   userId: string;
   migrationCompleted: boolean = false;
+  isUserInProgress: boolean = false;
 
   userInfo: IUserInfo;
 
@@ -73,19 +76,23 @@ export class AppComponent implements OnInit {
   }
 
   onFilePicked(event: Event) {
-    this.showSpinnerOverlay = true;
-    const file = (event.target as HTMLInputElement).files[0];
-    if (this.userId) {
-      this.fileService.sendFile(file, this.clientIP, this.userId)
-        .subscribe((response: IMediaContent[]) => {
-          this.mediaContents = response;
-          if (this.mediaContents) {
-            this.isMediaContentReceived = true;
-            this.showSpinnerOverlay = false;
-          }
-          this.contentBadge = this.mediaContents.length;
-          this.prepareTable();
-        });
+    if (this.isUserInProgress) {
+      this.dialog.open(InProgressDialogComponent);
+    } else {
+      this.showSpinnerOverlay = true;
+      const file = (event.target as HTMLInputElement).files[0];
+      if (this.userId) {
+        this.fileService.sendFile(file, this.clientIP, this.userId)
+          .subscribe((response: IMediaContent[]) => {
+            this.mediaContents = response;
+            if (this.mediaContents) {
+              this.isMediaContentReceived = true;
+              this.showSpinnerOverlay = false;
+            }
+            this.contentBadge = this.mediaContents.length;
+            this.prepareTable();
+          });
+      }
     }
   }
 
@@ -105,6 +112,19 @@ export class AppComponent implements OnInit {
             });
         }
       })
+  }
+
+  checkUserProgress() {
+    this.userService.getUserProgress(this.userId)
+      .subscribe((response) => {
+        this.isUserInProgress = response.body;
+      })
+  }
+
+  onTabClick(event: MatTabChangeEvent) {
+    if (event.index === 1) {
+      this.checkUserProgress();
+    }
   }
 
   applyFilter(event: Event) {

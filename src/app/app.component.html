@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<mat-tab-group dynamicHeight>
+<mat-tab-group dynamicHeight (selectedTabChange)="onTabClick($event)">
   <mat-tab label="Authorize Im Movin' App on Spotify">
     <div class="mat-elevation-z8" style="margin: 30px">
       <app-user-info *ngIf="isUserValid" [userInfo]="userInfo"></app-user-info>
@@ -116,7 +116,6 @@
     </div>
   </mat-tab>
 </mat-tab-group>
-
 
 <div class="overlay" *ngIf="showSpinnerOverlay">
   <div class="center">
