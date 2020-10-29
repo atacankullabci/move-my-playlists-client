@@ -19,7 +19,7 @@ export class UserService {
       'id': userId
     });
 
-    return this.http.get<IUserInfo>(dev, {headers: headers, observe: 'response'});
+    return this.http.get<IUserInfo>(prod, {headers: headers, observe: 'response'});
   }
 
   getUserProgress(userId: string): Observable<HttpResponse<boolean>> {
@@ -30,6 +30,6 @@ export class UserService {
       'id': userId
     });
 
-    return this.http.get<boolean>(dev, {headers: headers, observe: 'response'});
+    return this.http.get<boolean>(prod, {headers: headers, observe: 'response'});
   }
 }
