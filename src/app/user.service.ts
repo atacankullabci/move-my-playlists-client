@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {IUserInfo} from "./shared/user-info.model";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,17 @@ export class UserService {
       'id': userId
     });
 
-    return this.http.get<IUserInfo>(prod, {headers: headers, observe: 'response'});
+    return this.http.get<IUserInfo>(dev, {headers: headers, observe: 'response'});
   }
 
+  getUserProgress(userId: string): Observable<HttpResponse<boolean>> {
+    const dev = 'http://localhost:8080/api/progress';
+    const prod = 'https://imovin.club/api/progress';
+
+    const headers = new HttpHeaders({
+      'id': userId
+    });
+
+    return this.http.get<boolean>(dev, {headers: headers, observe: 'response'});
+  }
 }

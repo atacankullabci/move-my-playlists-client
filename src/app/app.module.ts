@@ -27,6 +27,7 @@ import {DialogComponent} from './shared/dialog/dialog.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {DisclaimerDialogComponent} from './shared/disclaimer-dialog/disclaimer-dialog.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {InProgressDialogComponent} from './shared/in-progress-dialog/in-progress-dialog.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     HeaderComponent,
     UserInfoComponent,
     DialogComponent,
-    DisclaimerDialogComponent
+    DisclaimerDialogComponent,
+    InProgressDialogComponent
   ],
   imports: [
     BrowserModule,
