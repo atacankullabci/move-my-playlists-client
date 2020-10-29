@@ -18,4 +18,9 @@ export class HeaderComponent implements OnInit {
   openDialog() {
     this.dialog.open(DisclaimerDialogComponent);
   }
+
+  redirect() {
+    window.location.href = 'https://atacankullabci.com';
+  }
+
 }
