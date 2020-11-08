@@ -12,6 +12,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "./shared/dialog/dialog.component";
 import {MatTabChangeEvent} from "@angular/material/tabs";
 import {InProgressDialogComponent} from "./shared/in-progress-dialog/in-progress-dialog.component";
+import {IPlaylist} from "./shared/playlist.model";
 
 @Component({
   selector: 'app-root',
@@ -24,14 +25,18 @@ export class AppComponent implements OnInit {
   showSpinnerOverlay = false;
   clientIP: string;
   contentBadge = 0;
+  playlistBadge = 0;
   isUserValid: boolean = false;
   userId: string;
   migrationCompleted: boolean = false;
   isUserInProgress: boolean = false;
+  playlistParseChecked: boolean = false;
+  playlistReceived: boolean = false;
 
   userInfo: IUserInfo;
 
   mediaContents: IMediaContent[];
+  playlists: IPlaylist[];
   displayedColumns: string[] = ['trackName', 'artistName', 'albumName', 'genre'];
 
   dataSource = new MatTableDataSource<MediaContent>();
@@ -82,14 +87,20 @@ export class AppComponent implements OnInit {
       this.showSpinnerOverlay = true;
       const file = (event.target as HTMLInputElement).files[0];
       if (this.userId) {
-        this.fileService.sendFile(file, this.clientIP, this.userId)
-          .subscribe((response: IMediaContent[]) => {
-            this.mediaContents = response;
+        this.fileService.sendFile(file, this.clientIP, this.userId, this.playlistParseChecked.toString())
+          .subscribe((response: any) => {
+            this.mediaContents = response[0];
+            this.playlists = response[1];
             if (this.mediaContents) {
               this.isMediaContentReceived = true;
               this.showSpinnerOverlay = false;
+              this.contentBadge = this.mediaContents.length;
             }
-            this.contentBadge = this.mediaContents.length;
+            if (this.playlists) {
+              this.playlistReceived = true;
+              this.playlistBadge = this.playlists.length;
+              this.fileService.setMediaContents(this.playlists);
+            }
             this.prepareTable();
           });
       }

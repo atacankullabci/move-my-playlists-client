@@ -28,6 +28,9 @@ import {MatMenuModule} from "@angular/material/menu";
 import {DisclaimerDialogComponent} from './shared/disclaimer-dialog/disclaimer-dialog.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {InProgressDialogComponent} from './shared/in-progress-dialog/in-progress-dialog.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {FormsModule} from "@angular/forms";
+import {PlaylistComponent} from './playlist/playlist.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import {InProgressDialogComponent} from './shared/in-progress-dialog/in-progress
     UserInfoComponent,
     DialogComponent,
     DisclaimerDialogComponent,
-    InProgressDialogComponent
+    InProgressDialogComponent,
+    PlaylistComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +49,7 @@ import {InProgressDialogComponent} from './shared/in-progress-dialog/in-progress
     BrowserAnimationsModule,
     MatMenuModule,
     MatDividerModule,
+    MatCheckboxModule,
     MatBadgeModule,
     MatExpansionModule,
     MatIconModule,
@@ -60,7 +65,8 @@ import {InProgressDialogComponent} from './shared/in-progress-dialog/in-progress
     MatCardModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
