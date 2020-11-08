@@ -99,6 +99,7 @@ export class AppComponent implements OnInit {
             if (this.playlists) {
               this.playlistReceived = true;
               this.playlistBadge = this.playlists.length;
+              this.fileService.setMediaContents(this.playlists);
             }
             this.prepareTable();
           });

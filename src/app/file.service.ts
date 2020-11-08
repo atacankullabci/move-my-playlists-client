@@ -1,10 +1,22 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {BehaviorSubject} from "rxjs";
+import {IPlaylist} from "./shared/playlist.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileService {
+
+  private playlist = new BehaviorSubject<IPlaylist[]>([]);
+
+  setMediaContents(content) {
+    this.playlist.next(content);
+  }
+
+  getMediaContents() {
+    return this.playlist.asObservable();
+  }
 
   constructor(private http: HttpClient) {
   }
@@ -22,7 +34,7 @@ export class FileService {
     const formData: FormData = new FormData();
     formData.append('file', fileContent);
 
-    return this.http.post<any>(prod, formData, {headers: headers});
+    return this.http.post<any>(dev, formData, {headers: headers});
   }
 
   migrate(id: string) {
