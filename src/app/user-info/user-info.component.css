@@ -8,3 +8,11 @@ mat-icon {
   margin: 0 auto;
   margin: 10px 0px 10px 10px;
 }
+
+.photo {
+  margin-top: 15px;
+  margin-left: 15px;
+  border-radius: 50px;
+  height: 100px;
+  width: 100px
+}

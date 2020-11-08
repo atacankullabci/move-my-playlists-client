@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {IMediaContent} from "./shared/media-content.model";
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +9,20 @@ export class FileService {
   constructor(private http: HttpClient) {
   }
 
-  sendFile(fileContent: File, clientIp: string, id: string) {
+  sendFile(fileContent: File, clientIp: string, id: string, playlistOption: string) {
     const dev = 'http://localhost:8080/api/map';
     const prod = 'https://imovin.club/api/map';
 
     const headers = new HttpHeaders({
       'client-ip': clientIp,
-      'id': id
+      'id': id,
+      'parse-playlist': playlistOption
     });
 
     const formData: FormData = new FormData();
     formData.append('file', fileContent);
 
-    return this.http.post<IMediaContent[]>(prod, formData, {headers: headers});
+    return this.http.post<any>(prod, formData, {headers: headers});
   }
 
   migrate(id: string) {

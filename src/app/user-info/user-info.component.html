@@ -2,9 +2,10 @@
   <mat-card-header>
     <mat-card-title>User Info</mat-card-title>
   </mat-card-header>
+  <mat-divider></mat-divider>
   <img *ngIf="userInfo.userImage.url" src="{{userInfo.userImage.url}}"
        alt="User Photo"
-       style="margin-left: 15px; border-radius: 50px; height: 100px; width: 100px">
+       class="photo">
   <mat-card-content>
     <mat-list>
       <mat-list-item role="listitem">
