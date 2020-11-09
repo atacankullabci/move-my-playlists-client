@@ -4,6 +4,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {IMediaContent, MediaContent} from "../shared/media-content.model";
 import {MatPaginator} from "@angular/material/paginator";
 import {FileService} from "../file.service";
+import {MatCheckboxChange} from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-playlist',
@@ -12,7 +13,8 @@ import {FileService} from "../file.service";
 })
 export class PlaylistComponent implements OnInit {
 
-  playlist: IPlaylist[];
+  playlist: IPlaylist[] = [];
+  checkedPlaylists: IPlaylist[] = [];
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   dataSource = new MatTableDataSource<MediaContent>();
   displayedColumns: string[] = ['trackName', 'artistName', 'albumName', 'genre'];
@@ -25,6 +27,15 @@ export class PlaylistComponent implements OnInit {
       .subscribe((response) => {
         this.playlist = response;
       })
+  }
+
+  playlistChecked(playlist: IPlaylist, event: MatCheckboxChange) {
+    if (event.checked) {
+      this.checkedPlaylists.push(playlist);
+    } else {
+      const index = this.checkedPlaylists.indexOf(playlist, 0);
+      this.checkedPlaylists.splice(index, 1);
+    }
   }
 
   panelOpened(playlistName: string) {

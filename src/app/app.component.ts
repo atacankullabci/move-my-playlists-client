@@ -97,7 +97,6 @@ export class AppComponent implements OnInit {
       if (this.userId) {
         this.fileService.sendFile(file, this.clientIP, this.userId, this.playlistOption.toString())
           .subscribe((response: any) => {
-            debugger;
             this.mediaContents = response[0];
             this.playlists = response[1];
             if (this.mediaContents) {
