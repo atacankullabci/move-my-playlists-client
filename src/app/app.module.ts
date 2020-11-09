@@ -31,6 +31,8 @@ import {InProgressDialogComponent} from './shared/in-progress-dialog/in-progress
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {FormsModule} from "@angular/forms";
 import {PlaylistComponent} from './playlist/playlist.component';
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -55,8 +57,10 @@ import {PlaylistComponent} from './playlist/playlist.component';
     MatIconModule,
     MatListModule,
     MatDialogModule,
+    MatTooltipModule,
     MatToolbarModule,
     MatTabsModule,
+    MatGridListModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,

@@ -20,17 +20,21 @@ import {IPlaylist} from "./shared/playlist.model";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
   title = 'im-movin-client';
+  mediaContentCanBeAdded = false;
   isMediaContentReceived = false;
   showSpinnerOverlay = false;
   clientIP: string;
   contentBadge = 0;
   playlistBadge = 0;
-  isUserValid: boolean = false;
   userId: string;
+
+  isUserValid: boolean = false;
   migrationCompleted: boolean = false;
   isUserInProgress: boolean = false;
-  playlistParseChecked: boolean = false;
+  playlistOption: boolean = false;
+  trackOption: boolean = false;
   playlistReceived: boolean = false;
 
   userInfo: IUserInfo;
@@ -80,6 +84,10 @@ export class AppComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  parseSelections() {
+    this.mediaContentCanBeAdded = this.playlistOption || this.trackOption;
+  }
+
   onFilePicked(event: Event) {
     if (this.isUserInProgress) {
       this.dialog.open(InProgressDialogComponent);
@@ -87,12 +95,13 @@ export class AppComponent implements OnInit {
       this.showSpinnerOverlay = true;
       const file = (event.target as HTMLInputElement).files[0];
       if (this.userId) {
-        this.fileService.sendFile(file, this.clientIP, this.userId, this.playlistParseChecked.toString())
+        this.fileService.sendFile(file, this.clientIP, this.userId, this.playlistOption.toString())
           .subscribe((response: any) => {
+            debugger;
             this.mediaContents = response[0];
             this.playlists = response[1];
             if (this.mediaContents) {
-              this.isMediaContentReceived = true;
+              this.isMediaContentReceived = this.trackOption;
               this.showSpinnerOverlay = false;
               this.contentBadge = this.mediaContents.length;
             }

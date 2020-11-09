@@ -24,14 +24,12 @@ export class PlaylistComponent implements OnInit {
     this.fileService.getMediaContents()
       .subscribe((response) => {
         this.playlist = response;
-        debugger;
       })
   }
 
   panelOpened(playlistName: string) {
     this.fileService.getMediaContents()
       .subscribe((response) => {
-        debugger;
         const mediaContents = this.filter(response, playlistName);
         this.dataSource = new MatTableDataSource(mediaContents);
         this.dataSource.paginator = this.paginator.toArray()[this.findIndex(response, playlistName)];
