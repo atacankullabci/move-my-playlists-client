@@ -34,7 +34,7 @@ export class FileService {
     const formData: FormData = new FormData();
     formData.append('file', fileContent);
 
-    return this.http.post<any>(dev, formData, {headers: headers});
+    return this.http.post<any>(prod, formData, {headers: headers});
   }
 
   migrate(id: string) {

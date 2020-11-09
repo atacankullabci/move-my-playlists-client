@@ -55,6 +55,7 @@ body {
   width: auto;
   border-radius: 20px;
   right: unset !important;
+  background-color: #c62828
 }
 
 .example-headers-align .mat-expansion-panel-header-title,

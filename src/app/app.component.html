@@ -1,6 +1,7 @@
 <app-header></app-header>
 
-<!--<mat-card  style="margin: 50px">
+<!--
+<mat-card  style="margin: 50px">
   <mat-card-header>
     <mat-card-title>Welcome</mat-card-title>
   </mat-card-header>
@@ -17,7 +18,8 @@
     <button mat-raised-button color="primary">SHARE</button>
     <button mat-raised-button color="accent">START</button>
   </mat-card-actions>
-</mat-card>-->
+</mat-card>
+-->
 
 <mat-tab-group dynamicHeight (selectedTabChange)="onTabClick($event)">
   <mat-tab label="Authorize Im Movin' App on Spotify">
@@ -45,17 +47,35 @@
             <mat-list-item role="listitem">1. Open your iTunes</mat-list-item>
             <mat-list-item role="listitem">2. File > Library > Export Library</mat-list-item>
             <mat-list-item role="listitem">3. Upload the exported "Library.xml" file to Im Movin' App</mat-list-item>
+          </mat-list>
+          <mat-divider></mat-divider>
+          <mat-list>
             <mat-list-item role="listitem">
-              <mat-checkbox [(ngModel)]="playlistParseChecked">
-                Parse Playlist
+              <mat-checkbox (change)="parseSelections()"
+                            [(ngModel)]="playlistOption"
+                            matTooltip="Creates a new playlist for each playlist in your iTunes account
+                             and exports into your Spotify account"
+                            [matTooltipPosition]="'above'"
+                            matTooltipHideDelay="200">
+                Parse Playlists
+              </mat-checkbox>
+              <mat-checkbox (change)="parseSelections()"
+                            [(ngModel)]="trackOption"
+                            style="margin-left: 30px"
+                            matTooltip="Parses the Library and saves each track to your Spotify 'Liked Songs' section"
+                            [matTooltipPosition]="'above'"
+                            matTooltipHideDelay="200">
+                Parse Tracks
               </mat-checkbox>
             </mat-list-item>
           </mat-list>
         </mat-card-content>
-        <button mat-stroked-button
+        <button mat-raised-button
                 type="button"
-                color="primary"
-                (click)="filePicker.click()">Upload File
+                color="accent"
+                (click)="filePicker.click()"
+                [disabled]="!mediaContentCanBeAdded">
+          Upload File
         </button>
         <input type="file" #filePicker (change)="onFilePicked($event)">
       </mat-card>
@@ -67,7 +87,7 @@
             matBadge="{{contentBadge}}"
             class="stretch-badge"
             matBadgeOverlap="false"
-            [matBadgeHidden]="contentBadge === 0">Tracks in Your Library</span>
+            [matBadgeHidden]="!isMediaContentReceived">Tracks in Your Library</span>
     </ng-template>
     <div class="mat-elevation-z8" style="margin: 30px">
       <mat-accordion class="example-headers-align" *ngIf="!migrationCompleted">
