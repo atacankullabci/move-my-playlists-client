@@ -3,9 +3,12 @@
     <mat-expansion-panel *ngFor="let item of playlist"
                          (opened)="panelOpened(item.name)">
       <mat-expansion-panel-header>
-        <mat-panel-title>
+        <mat-checkbox color="accent"
+                      (change)="playlistChecked(item, $event)"
+                      (click)="$event.stopPropagation()"
+                      (keydown)="$event.stopPropagation()">
           {{item.name}}
-        </mat-panel-title>
+        </mat-checkbox>
       </mat-expansion-panel-header>
       <mat-form-field>
         <mat-label>Search</mat-label>
