@@ -46,13 +46,13 @@ body {
 }
 
 /deep/ .mat-tab-label, /deep/ .mat-tab-label-active {
-  width: 100%;
+  width: 25%;
   padding: 5px !important;
   margin: 5px !important;
 }
 
 .stretch-badge > .mat-badge-content {
-  width: auto;
+  width: 40px;
   border-radius: 20px;
   right: unset !important;
   background-color: #c62828
