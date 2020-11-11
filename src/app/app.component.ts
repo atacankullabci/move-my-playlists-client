@@ -13,6 +13,7 @@ import {DialogComponent} from "./shared/dialog/dialog.component";
 import {MatTabChangeEvent} from "@angular/material/tabs";
 import {InProgressDialogComponent} from "./shared/in-progress-dialog/in-progress-dialog.component";
 import {IPlaylist} from "./shared/playlist.model";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-root',
@@ -52,7 +53,8 @@ export class AppComponent implements OnInit {
               private fileService: FileService,
               private ipService: IpService,
               private userService: UserService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -106,10 +108,16 @@ export class AppComponent implements OnInit {
             }
             if (this.playlists) {
               this.playlistReceived = true;
+              this.showSpinnerOverlay = false;
               this.playlistBadge = this.playlists.length;
               this.fileService.setMediaContents(this.playlists);
             }
             this.prepareTable();
+          }, (error: any) => {
+            this.showSpinnerOverlay = false;
+            this.snackBar.open(error.error.message, null, {
+              duration: 3000
+            });
           });
       }
     }
