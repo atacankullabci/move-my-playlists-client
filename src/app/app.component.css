@@ -76,3 +76,9 @@ body {
 .example-margin {
   margin: 0 10px;
 }
+
+.card {
+  width: 45%;
+  margin: 30px auto auto auto;
+  padding: 25px;
+}
