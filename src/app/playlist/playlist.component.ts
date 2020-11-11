@@ -38,6 +38,10 @@ export class PlaylistComponent implements OnInit {
     }
   }
 
+  migrate() {
+
+  }
+
   panelOpened(playlistName: string) {
     this.fileService.getMediaContents()
       .subscribe((response) => {

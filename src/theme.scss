@@ -4,7 +4,7 @@
 
 $primary: mat-palette($mat-grey, 800);
 $accent: mat-palette($mat-red, 800, 50, 50, 50);
-$warn: mat-palette($mat-orange, 900);
+$warn: mat-palette($mat-yellow, 500);
 $background-color: map_get($mat-grey, 50);
 
 $theme: mat-light-theme($primary, $accent, $warn);

@@ -1,3 +1,23 @@
+<mat-card class="mat-elevation-z8 card">
+  <mat-card-header>
+    <mat-card-title>Migrate Playlists</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select the playlists that you want to import to your spotify.
+      Im Movin' app is going to create a playlist and fill the playlist tracks accordingly.
+    </p>
+  </mat-card-content>
+  <mat-card-actions style="text-align: center; margin-bottom: 5px">
+    <button mat-raised-button
+            type="button"
+            color="accent"
+            (click)="migrate()"
+            [disabled]="checkedPlaylists.length < 1">
+      Start Migration
+    </button>
+  </mat-card-actions>
+</mat-card>
 <div class="mat-elevation-z8" style="margin: 30px">
   <mat-accordion>
     <mat-expansion-panel *ngFor="let item of playlist"

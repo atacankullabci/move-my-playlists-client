@@ -45,6 +45,6 @@ export class FileService {
       'id': id
     });
 
-    return this.http.post<boolean>(prod, null, {headers: headers});
+    return this.http.post<boolean>(dev, null, {headers: headers});
   }
 }
