@@ -33,6 +33,7 @@ import {FormsModule} from "@angular/forms";
 import {PlaylistComponent} from './playlist/playlist.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     MatListModule,
     MatDialogModule,
     MatTooltipModule,
+    MatSnackBarModule,
     MatToolbarModule,
     MatTabsModule,
     MatGridListModule,

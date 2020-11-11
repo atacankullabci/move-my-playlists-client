@@ -38,8 +38,8 @@ export class FileService {
   }
 
   migrate(id: string) {
-    const dev = 'http://localhost:8080/api/migrate';
-    const prod = 'https://imovin.club/api/migrate';
+    const dev = 'http://localhost:8080/api/migrate/tracks';
+    const prod = 'https://imovin.club/api/migrate/tracks';
 
     const headers = new HttpHeaders({
       'id': id
