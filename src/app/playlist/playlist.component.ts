@@ -5,6 +5,9 @@ import {IMediaContent, MediaContent} from "../shared/media-content.model";
 import {MatPaginator} from "@angular/material/paginator";
 import {FileService} from "../file.service";
 import {MatCheckboxChange} from "@angular/material/checkbox";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogComponent} from "../shared/dialog/dialog.component";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-playlist',
@@ -13,16 +16,26 @@ import {MatCheckboxChange} from "@angular/material/checkbox";
 })
 export class PlaylistComponent implements OnInit {
 
+  userId: string;
   playlist: IPlaylist[] = [];
   checkedPlaylists: IPlaylist[] = [];
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   dataSource = new MatTableDataSource<MediaContent>();
   displayedColumns: string[] = ['trackName', 'artistName', 'albumName', 'genre'];
+  migrationStarted: boolean = false;
 
-  constructor(private fileService: FileService) {
+  constructor(private route: ActivatedRoute,
+              private fileService: FileService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params['id']) {
+        this.userId = params['id'];
+      }
+    });
+
     this.fileService.getMediaContents()
       .subscribe((response) => {
         this.playlist = response;
@@ -38,8 +51,18 @@ export class PlaylistComponent implements OnInit {
     }
   }
 
-  migrate() {
-
+  migratePlaylists() {
+    const dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.migrationStarted = true;
+          this.fileService.migratePlaylists(this.userId, this.checkedPlaylists)
+            .subscribe(() => {
+              this.migrationStarted = false;
+            });
+        }
+      })
   }
 
   panelOpened(playlistName: string) {

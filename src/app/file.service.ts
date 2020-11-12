@@ -34,10 +34,10 @@ export class FileService {
     const formData: FormData = new FormData();
     formData.append('file', fileContent);
 
-    return this.http.post<any>(dev, formData, {headers: headers});
+    return this.http.post<any>(prod, formData, {headers: headers});
   }
 
-  migrate(id: string) {
+  migrateTracks(id: string) {
     const dev = 'http://localhost:8080/api/migrate/tracks';
     const prod = 'https://imovin.club/api/migrate/tracks';
 
@@ -45,6 +45,17 @@ export class FileService {
       'id': id
     });
 
-    return this.http.post<boolean>(dev, null, {headers: headers});
+    return this.http.post<boolean>(prod, null, {headers: headers});
+  }
+
+  migratePlaylists(id: string, playlist: IPlaylist[]) {
+    const dev = 'http://localhost:8080/api/migrate/playlists';
+    const prod = 'https://imovin.club/api/migrate/playlists';
+
+    const headers = new HttpHeaders({
+      'id': id
+    });
+
+    return this.http.post(prod, playlist, {headers: headers});
   }
 }

@@ -1,4 +1,20 @@
-<mat-card class="mat-elevation-z8 card">
+<mat-card class="mat-elevation-z8 card" *ngIf="migrationStarted">
+  <mat-card-title>
+    You have been started migration of following playlists;
+    <mat-list *ngFor="let list of checkedPlaylists; let i = index" role="list">
+      <mat-list-item role="listitem">{{i + 1}}) {{list.name}}({{list.mediaContents.length}} tracks)</mat-list-item>
+    </mat-list>
+  </mat-card-title>
+  <mat-card-content>
+    <p>
+      According to your library size, this process might take a while.
+      Please, check your spotify library.
+    </p>
+    <mat-progress-bar mode="indeterminate" color="accent" style="width:100% !important;"></mat-progress-bar>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="mat-elevation-z8 card" *ngIf="!migrationStarted">
   <mat-card-header>
     <mat-card-title>Migrate Playlists</mat-card-title>
   </mat-card-header>
@@ -12,7 +28,7 @@
     <button mat-raised-button
             type="button"
             color="accent"
-            (click)="migrate()"
+            (click)="migratePlaylists()"
             [disabled]="checkedPlaylists.length < 1">
       Start Migration
     </button>
@@ -26,7 +42,8 @@
         <mat-checkbox color="accent"
                       (change)="playlistChecked(item, $event)"
                       (click)="$event.stopPropagation()"
-                      (keydown)="$event.stopPropagation()">
+                      (keydown)="$event.stopPropagation()"
+                      [disabled]="migrationStarted">
           {{item.name}}
         </mat-checkbox>
       </mat-expansion-panel-header>
