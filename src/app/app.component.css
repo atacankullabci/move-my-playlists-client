@@ -82,3 +82,9 @@ body {
   margin: 30px auto auto auto;
   padding: 25px;
 }
+
+.banner-image {
+  width: 100%;
+  max-height: 100px;
+  max-width: 500px;
+}

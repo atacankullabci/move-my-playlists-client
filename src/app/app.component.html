@@ -1,25 +1,35 @@
 <app-header></app-header>
 
-<!--
-<mat-card  style="margin: 50px">
+<mat-card class="mat-elevation-z8" style="margin: 30px" *ngIf="false">
   <mat-card-header>
     <mat-card-title>Welcome</mat-card-title>
+    <mat-card-subtitle>This website migrates your iTunes library, playlists to Spotify.</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <p>
-      This website migrates your iTunes library, playlists to Spotify.
-      It takes no more than couple of minutes, also its free to
-      use.
-      If you are a developer here is the source.
-    </p>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon mat-list-icon aria-hidden="false">more_time</mat-icon>
+        It takes no more than couple of minutes
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon aria-hidden="false">money_off</mat-icon>
+        Free to use
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon aria-hidden="false">person</mat-icon>
+        No registration required
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon aria-hidden="false">code</mat-icon>
+        An open source project you can check it out
+      </mat-list-item>
+    </mat-list>
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button color="warn">LIKE</button>
+  <mat-card-actions style="padding: 20px">
     <button mat-raised-button color="primary">SHARE</button>
     <button mat-raised-button color="accent">START</button>
   </mat-card-actions>
 </mat-card>
--->
 
 <mat-tab-group dynamicHeight (selectedTabChange)="onTabClick($event)">
   <mat-tab label="Authorize Im Movin' App on Spotify">

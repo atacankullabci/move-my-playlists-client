@@ -12,7 +12,7 @@ export class UserService {
   }
 
   checkUser(userId: string) {
-    const dev = 'http://localhost:8080/api/users';
+    //const dev = 'http://localhost:8080/api/users';
     const prod = 'https://imovin.club/api/users';
 
     const headers = new HttpHeaders({
@@ -23,7 +23,7 @@ export class UserService {
   }
 
   getUserProgress(userId: string): Observable<HttpResponse<boolean>> {
-    const dev = 'http://localhost:8080/api/progress';
+    //const dev = 'http://localhost:8080/api/progress';
     const prod = 'https://imovin.club/api/progress';
 
     const headers = new HttpHeaders({
