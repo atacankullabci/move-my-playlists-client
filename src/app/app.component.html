@@ -1,85 +1,85 @@
 <app-header></app-header>
 
-<mat-card class="mat-elevation-z8" style="margin: 30px" *ngIf="false">
-  <mat-card-header>
-    <mat-card-title>Welcome</mat-card-title>
-    <mat-card-subtitle>This website migrates your iTunes library, playlists to Spotify.</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <mat-list>
-      <mat-list-item>
-        <mat-icon mat-list-icon aria-hidden="false">more_time</mat-icon>
-        It takes no more than couple of minutes
-      </mat-list-item>
-      <mat-list-item>
-        <mat-icon mat-list-icon aria-hidden="false">money_off</mat-icon>
-        Free to use
-      </mat-list-item>
-      <mat-list-item>
-        <mat-icon mat-list-icon aria-hidden="false">person</mat-icon>
-        No registration required
-      </mat-list-item>
-      <mat-list-item>
-        <mat-icon mat-list-icon aria-hidden="false">code</mat-icon>
-        An open source project you can check it out
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
-  <mat-card-actions style="padding: 20px">
-    <button mat-raised-button color="primary">SHARE</button>
-    <button mat-raised-button color="accent">START</button>
-  </mat-card-actions>
-</mat-card>
+<div *ngIf="introPageShowed">
+  <img src="assets/image.png" class="banner-image">
+  <mat-card class="mat-elevation-z8 intro-card">
+    <mat-card-header>
+      <mat-card-title>Welcome</mat-card-title>
+      <mat-card-subtitle>This website migrates your iTunes library to Spotify.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item>
+          <mat-icon mat-list-icon aria-hidden="false">more_time</mat-icon>
+          It takes no more than couple of minutes
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon mat-list-icon aria-hidden="false">money_off</mat-icon>
+          Free to use
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon mat-list-icon aria-hidden="false">person</mat-icon>
+          No registration required
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon mat-list-icon aria-hidden="false">code</mat-icon>
+          An open source project you can check it out
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+    <mat-card-actions style="text-align: center">
+      <button mat-raised-button color="accent" (click)="start()">START</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
 
-<mat-tab-group dynamicHeight (selectedTabChange)="onTabClick($event)">
+<mat-tab-group dynamicHeight (selectedTabChange)="onTabClick($event)" *ngIf="!introPageShowed">
   <mat-tab label="Authorize Im Movin' App on Spotify">
-    <div class="mat-elevation-z8" style="margin: 30px">
-      <app-user-info *ngIf="isUserValid" [userInfo]="userInfo"></app-user-info>
-      <mat-card *ngIf="!isUserValid">
-        <mat-card-title>
-          Im Movin' App needs a permission from your spotify account to modify your library.
-        </mat-card-title>
-        <mat-card-content>
-          <button mat-raised-button type="button" color="accent" (click)="goToAuthPage()">Give Permission</button>
-        </mat-card-content>
-      </mat-card>
-    </div>
+    <app-user-info *ngIf="isUserValid" [userInfo]="userInfo"></app-user-info>
+    <mat-card *ngIf="!isUserValid" class="mat-elevation-z8 card">
+      <mat-card-title>
+        Im Movin' App needs a permission from your Spotify account to modify your library.
+      </mat-card-title>
+      <mat-card-actions style="text-align: center">
+        <button mat-raised-button type="button" color="accent" (click)="goToAuthPage()">Give Permission</button>
+      </mat-card-actions>
+    </mat-card>
   </mat-tab>
   <mat-tab label="Import your iTunes Library" [disabled]="!isUserValid">
-    <div class="mat-elevation-z8" style="margin: 30px">
-      <mat-card>
-        <mat-card-title>
-          Upload your iTunes library
-        </mat-card-title>
+    <mat-card class="mat-elevation-z8 card">
+      <mat-card-title>
+        Upload your iTunes library
+      </mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item role="listitem">1. Open your iTunes</mat-list-item>
+          <mat-list-item role="listitem">2. File > Library > Export Library</mat-list-item>
+          <mat-list-item role="listitem">3. Upload the exported "Library.xml" file to Im Movin' App</mat-list-item>
+        </mat-list>
         <mat-divider></mat-divider>
-        <mat-card-content>
-          <mat-list>
-            <mat-list-item role="listitem">1. Open your iTunes</mat-list-item>
-            <mat-list-item role="listitem">2. File > Library > Export Library</mat-list-item>
-            <mat-list-item role="listitem">3. Upload the exported "Library.xml" file to Im Movin' App</mat-list-item>
-          </mat-list>
-          <mat-divider></mat-divider>
-          <mat-list>
-            <mat-list-item role="listitem">
-              <mat-checkbox (change)="parseSelections()"
-                            [(ngModel)]="playlistOption"
-                            matTooltip="Creates a new playlist for each playlist in your iTunes account
+        <mat-list>
+          <mat-list-item role="listitem">
+            <mat-checkbox (change)="parseSelections()"
+                          [(ngModel)]="playlistOption"
+                          matTooltip="Creates a new playlist for each playlist in your iTunes account
                              and imports into your Spotify account"
-                            [matTooltipPosition]="'above'"
-                            matTooltipHideDelay="200">
-                Parse Playlists
-              </mat-checkbox>
-              <mat-checkbox (change)="parseSelections()"
-                            [(ngModel)]="trackOption"
-                            style="margin-left: 30px"
-                            matTooltip="Parses the Library and saves each track to your Spotify 'Liked Songs' section"
-                            [matTooltipPosition]="'above'"
-                            matTooltipHideDelay="200">
-                Parse Tracks
-              </mat-checkbox>
-            </mat-list-item>
-          </mat-list>
-        </mat-card-content>
+                          [matTooltipPosition]="'above'"
+                          matTooltipHideDelay="200">
+              Parse Playlists
+            </mat-checkbox>
+            <mat-checkbox (change)="parseSelections()"
+                          [(ngModel)]="trackOption"
+                          style="margin-left: 30px"
+                          matTooltip="Parses the Library and saves each track to your Spotify 'Liked Songs' section"
+                          [matTooltipPosition]="'above'"
+                          matTooltipHideDelay="200">
+              Parse Tracks
+            </mat-checkbox>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+      <mat-card-actions style="text-align: center">
         <button mat-raised-button
                 type="button"
                 color="accent"
@@ -87,9 +87,9 @@
                 [disabled]="!mediaContentCanBeAdded">
           Upload File
         </button>
-        <input type="file" #filePicker (change)="onFilePicked($event)">
-      </mat-card>
-    </div>
+      </mat-card-actions>
+    </mat-card>
+    <input type="file" #filePicker (change)="onFilePicked($event)">
   </mat-tab>
   <mat-tab [disabled]="!isMediaContentReceived">
     <ng-template mat-tab-label>

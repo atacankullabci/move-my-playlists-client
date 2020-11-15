@@ -79,12 +79,19 @@ body {
 
 .card {
   width: 45%;
+  margin: 30px auto;
+  padding: 25px;
+}
+
+.intro-card {
+  width: 30%;
   margin: 30px auto auto auto;
   padding: 25px;
 }
 
 .banner-image {
-  width: 100%;
-  max-height: 100px;
-  max-width: 500px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 380px;
 }
