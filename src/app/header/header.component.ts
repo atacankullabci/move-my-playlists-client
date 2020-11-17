@@ -22,4 +22,8 @@ export class HeaderComponent implements OnInit {
   redirect() {
     window.location.href = 'https://atacankullabci.com';
   }
+
+  reloadPage() {
+    window.location.reload();
+  }
 }
