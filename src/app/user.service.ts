@@ -11,6 +11,13 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
+  getRandomState() {
+    //const dev = 'http://localhost:8080/api/state';
+    const prod = 'https://imovin.club/api/state';
+
+    return this.http.get(prod, {responseType: 'text'});
+  }
+
   checkUser(userId: string) {
     //const dev = 'http://localhost:8080/api/users';
     const prod = 'https://imovin.club/api/users';

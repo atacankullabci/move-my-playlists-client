@@ -5,7 +5,7 @@ import {IMediaContent, MediaContent} from "./shared/media-content.model";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {IUserInfo} from "./shared/user-info.model";
 import {UserService} from "./user.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -51,6 +51,7 @@ export class AppComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private fileService: FileService,
               private ipService: IpService,
               private userService: UserService,
@@ -60,6 +61,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
+      if (params['error']) {
+        this.snackBar.open("User did not accept the request", null, {
+          duration: 3000
+        });
+        return
+      }
       if (params['id']) {
         this.userId = params['id'];
         this.userService.checkUser(this.userId)
@@ -162,7 +169,16 @@ export class AppComponent implements OnInit {
   }
 
   goToAuthPage() {
-    window.location.href = 'https://accounts.spotify.com/authorize?response_type=code&client_id=b5ead0205230451d877d487a856a30a9&redirect_uri=http%3A%2F%2Fimovin.club%2Fcallback%2F&scope=user-library-modify,playlist-modify-public&show_dialog=true';
+    this.userService.getRandomState()
+      .subscribe((state) => {
+        window.location.href = 'https://accounts.spotify.com/authorize?' +
+          'response_type=code&' +
+          'client_id=b5ead0205230451d877d487a856a30a9&' +
+          'redirect_uri=http%3A%2F%2Fimovin.club%2Fcallback%2F&' +
+          'scope=user-library-modify,playlist-modify-public&' +
+          'show_dialog=true&' +
+          'state=' + state;
+      })
   }
 
   start() {
