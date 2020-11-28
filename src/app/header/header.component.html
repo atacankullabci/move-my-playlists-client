@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <span>
-    <a (click)="reloadPage()" style="cursor: pointer">Im Movin'</a>
+    <a (click)="reloadPage()" style="cursor: pointer">Move My Playlists</a>
   </span>
   <span class="spacer"></span>
 
@@ -16,6 +16,12 @@
       <mat-icon>code</mat-icon>
       <span>
         Creator
+      </span>
+    </button>
+    <button mat-menu-item (click)="tweetIt()" style="color: black">
+      <mat-icon>share</mat-icon>
+      <span>
+        Share on Twitter
       </span>
     </button>
   </mat-menu>

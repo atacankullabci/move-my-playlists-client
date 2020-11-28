@@ -10,19 +10,19 @@
     <mat-card-content>
       <mat-list>
         <mat-list-item>
-          <mat-icon mat-list-icon aria-hidden="false">more_time</mat-icon>
+          <mat-icon mat-list-icon aria-hidden="true">more_time</mat-icon>
           It takes no more than couple of minutes
         </mat-list-item>
         <mat-list-item>
-          <mat-icon mat-list-icon aria-hidden="false">money_off</mat-icon>
+          <mat-icon mat-list-icon aria-hidden="true">money_off</mat-icon>
           Free to use
         </mat-list-item>
         <mat-list-item>
-          <mat-icon mat-list-icon aria-hidden="false">person</mat-icon>
+          <mat-icon mat-list-icon aria-hidden="true">person</mat-icon>
           No registration required
         </mat-list-item>
         <mat-list-item>
-          <mat-icon mat-list-icon aria-hidden="false">code</mat-icon>
+          <mat-icon mat-list-icon aria-hidden="true">code</mat-icon>
           An open source project you can check it out
         </mat-list-item>
       </mat-list>
@@ -34,11 +34,11 @@
 </div>
 
 <mat-tab-group dynamicHeight (selectedTabChange)="onTabClick($event)" *ngIf="!introPageShowed">
-  <mat-tab label="Authorize Im Movin' App on Spotify">
+  <mat-tab label="Authorize the App on Spotify">
     <app-user-info *ngIf="isUserValid" [userInfo]="userInfo"></app-user-info>
     <mat-card *ngIf="!isUserValid" class="mat-elevation-z8 card">
       <mat-card-title>
-        Im Movin' App needs a permission from your Spotify account to modify your library.
+        App needs a permission from your Spotify account to modify your library.
       </mat-card-title>
       <mat-card-actions style="text-align: center">
         <button mat-raised-button type="button" color="accent" (click)="goToAuthPage()">Give Permission</button>
@@ -55,7 +55,7 @@
         <mat-list>
           <mat-list-item role="listitem">1. Open your iTunes</mat-list-item>
           <mat-list-item role="listitem">2. File > Library > Export Library</mat-list-item>
-          <mat-list-item role="listitem">3. Upload the exported "Library.xml" file to Im Movin' App</mat-list-item>
+          <mat-list-item role="listitem">3. Upload the exported "Library.xml" file to the App</mat-list-item>
         </mat-list>
         <mat-divider></mat-divider>
         <mat-list>
@@ -106,7 +106,7 @@
       </mat-card-header>
       <mat-card-content>
         <p>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Im Movin' app is going to add all the tracks in your library
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;App is going to add all the tracks in your library
           into Spotify 'Liked Songs' tab.
         </p>
       </mat-card-content>

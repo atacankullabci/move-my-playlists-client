@@ -23,7 +23,7 @@ export class FileService {
 
   sendFile(fileContent: File, clientIp: string, id: string, playlistOption: string) {
     //const dev = 'http://localhost:8080/api/map';
-    const prod = 'https://imovin.club/api/map';
+    const prod = 'https://movemyplaylists.com/api/map';
 
     const headers = new HttpHeaders({
       'client-ip': clientIp,
@@ -39,7 +39,7 @@ export class FileService {
 
   migrateTracks(id: string) {
     //const dev = 'http://localhost:8080/api/migrate/tracks';
-    const prod = 'https://imovin.club/api/migrate/tracks';
+    const prod = 'https://movemyplaylists.com/api/migrate/tracks';
 
     const headers = new HttpHeaders({
       'id': id
@@ -50,7 +50,7 @@ export class FileService {
 
   migratePlaylists(id: string, playlist: IPlaylist[]) {
     //const dev = 'http://localhost:8080/api/migrate/playlists';
-    const prod = 'https://imovin.club/api/migrate/playlists';
+    const prod = 'https://movemyplaylists.com/api/migrate/playlists';
 
     const headers = new HttpHeaders({
       'id': id
