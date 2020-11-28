@@ -13,14 +13,14 @@ export class UserService {
 
   getRandomState() {
     //const dev = 'http://localhost:8080/api/state';
-    const prod = 'https://imovin.club/api/state';
+    const prod = 'https://movemyplaylists.com/api/state';
 
     return this.http.get(prod, {responseType: 'text'});
   }
 
   checkUser(userId: string) {
     //const dev = 'http://localhost:8080/api/users';
-    const prod = 'https://imovin.club/api/users';
+    const prod = 'https://movemyplaylists.com/api/users';
 
     const headers = new HttpHeaders({
       'id': userId
@@ -31,7 +31,7 @@ export class UserService {
 
   getUserProgress(userId: string): Observable<HttpResponse<boolean>> {
     //const dev = 'http://localhost:8080/api/progress';
-    const prod = 'https://imovin.club/api/progress';
+    const prod = 'https://movemyplaylists.com/api/progress';
 
     const headers = new HttpHeaders({
       'id': userId
