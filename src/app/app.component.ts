@@ -14,6 +14,7 @@ import {MatTabChangeEvent} from "@angular/material/tabs";
 import {InProgressDialogComponent} from "./shared/in-progress-dialog/in-progress-dialog.component";
 import {IPlaylist} from "./shared/playlist.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {REDIRECT_URI, SPOTIFY_CLIENT_ID, USER_SCOPES} from './app.constants';
 
 @Component({
   selector: 'app-root',
@@ -173,9 +174,9 @@ export class AppComponent implements OnInit {
       .subscribe((state) => {
         window.location.href = 'https://accounts.spotify.com/authorize?' +
           'response_type=code&' +
-          'client_id=b5ead0205230451d877d487a856a30a9&' +
-          'redirect_uri=http%3A%2F%2Fmovemyplaylists.com%2Fcallback%2F&' +
-          'scope=user-library-modify,playlist-modify-public&' +
+          'client_id=' + SPOTIFY_CLIENT_ID + '&' +
+          'redirect_uri=' + REDIRECT_URI + '&' +
+          'scope=' + USER_SCOPES + '&' +
           'show_dialog=true&' +
           'state=' + state;
       })
