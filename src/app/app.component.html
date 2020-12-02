@@ -5,7 +5,7 @@
   <mat-card class="mat-elevation-z8 intro-card">
     <mat-card-header>
       <mat-card-title>Welcome</mat-card-title>
-      <mat-card-subtitle>This website migrates your iTunes library to Spotify.</mat-card-subtitle>
+      <mat-card-subtitle>This website transfers your iTunes library to Spotify.</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <mat-list>
@@ -23,7 +23,9 @@
         </mat-list-item>
         <mat-list-item>
           <mat-icon mat-list-icon aria-hidden="true">code</mat-icon>
-          An open source project you can check it out
+          <p>An open source project you can
+            <a href="https://gitlab.com/atacankullabci/move-my-playlists">check it out</a>
+          </p>
         </mat-list-item>
       </mat-list>
     </mat-card-content>
@@ -102,7 +104,7 @@
 
     <mat-card class="mat-elevation-z8 card" *ngIf="!migrationCompleted">
       <mat-card-header>
-        <mat-card-title>Migrate Tracks</mat-card-title>
+        <mat-card-title>Transfer Tracks</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <p>
