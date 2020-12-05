@@ -3,3 +3,7 @@
   margin: 30px auto;
   padding: 25px;
 }
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
