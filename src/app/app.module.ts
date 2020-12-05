@@ -34,6 +34,7 @@ import {PlaylistComponent} from './playlist/playlist.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     MatToolbarModule,
     MatTabsModule,
     MatGridListModule,
+    MatChipsModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
