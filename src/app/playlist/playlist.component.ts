@@ -36,7 +36,7 @@ export class PlaylistComponent implements OnInit {
       }
     });
 
-    this.fileService.getMediaContents()
+    this.fileService.getPlaylists()
       .subscribe((response) => {
         this.playlist = response;
       })
@@ -66,7 +66,7 @@ export class PlaylistComponent implements OnInit {
   }
 
   panelOpened(playlistName: string) {
-    this.fileService.getMediaContents()
+    this.fileService.getPlaylists()
       .subscribe((response) => {
         const mediaContents = this.filter(response, playlistName);
         this.dataSource = new MatTableDataSource(mediaContents);

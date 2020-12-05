@@ -1,0 +1,70 @@
+<mat-card class="mat-elevation-z8 card" *ngIf="!migrationCompleted">
+  <mat-card-header>
+    <mat-card-title>Transfer Tracks</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;App is going to add all the tracks in your library
+      into Spotify 'Liked Songs' tab.
+    </p>
+  </mat-card-content>
+  <mat-card-actions style="text-align: center; margin-bottom: 5px">
+    <button mat-raised-button type="button" color="accent" (click)="migrate()">Start Migration</button>
+  </mat-card-actions>
+</mat-card>
+
+<mat-chip-list aria-label="Genre List" multiple>
+  <mat-chip
+    color="accent"
+    [selectable]="true"
+    (selectionChange)="chipSelected($event)"
+    [selected]="chip.state"
+    (click)="chip.state=!chip.state"
+    *ngFor="let chip of chips">
+    {{chip.name}}
+  </mat-chip>
+</mat-chip-list>
+
+<mat-card class="mat-elevation-z8 card" *ngIf="migrationCompleted">
+  <mat-card-title>
+    You have been started migration of {{this.mediaContents.length}} tracks
+  </mat-card-title>
+  <mat-card-content>
+    <p>
+      According to your library size, this process might take a while.
+      Please, check your spotify library.
+    </p>
+    <mat-progress-bar mode="indeterminate" color="accent" style="width:100% !important;"></mat-progress-bar>
+  </mat-card-content>
+</mat-card>
+
+<mat-form-field>
+  <mat-label>Search</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Fleetwood Mac" #input>
+</mat-form-field>
+<table mat-table [dataSource]="dataSource" matSort style="width: 100%">
+  <ng-container matColumnDef="trackName">
+    <th mat-header-cell *matHeaderCellDef>Song</th>
+    <td mat-cell *matCellDef="let element"> {{element.trackName}} </td>
+  </ng-container>
+  <ng-container matColumnDef="artistName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Artist</th>
+    <td mat-cell *matCellDef="let element"> {{element.artistName}} </td>
+  </ng-container>
+  <ng-container matColumnDef="albumName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Album</th>
+    <td mat-cell *matCellDef="let element"> {{element.albumName}} </td>
+  </ng-container>
+  <ng-container matColumnDef="genre">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Genre</th>
+    <td mat-cell *matCellDef="let element"> {{element.genre}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+  </tr>
+</table>
+<mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
