@@ -1,4 +1,4 @@
-import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {IPlaylist} from "../shared/playlist.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {IMediaContent, MediaContent} from "../shared/media-content.model";
@@ -16,6 +16,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class PlaylistComponent implements OnInit {
 
+  @Input()
   userId: string;
   playlist: IPlaylist[] = [];
   checkedPlaylists: IPlaylist[] = [];
@@ -30,12 +31,6 @@ export class PlaylistComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      if (params['id']) {
-        this.userId = params['id'];
-      }
-    });
-
     this.fileService.getPlaylists()
       .subscribe((response) => {
         this.playlist = response;

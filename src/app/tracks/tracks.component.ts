@@ -48,10 +48,11 @@ export class TracksComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe((res) => {
         if (res) {
+          this.migrationCompleted = true;
           this.fileService.migrateTracks(this.userId)
             .subscribe((resp) => {
               if (resp) {
-                this.migrationCompleted = true;
+                this.migrationCompleted = false;
               }
             });
         }
@@ -83,7 +84,6 @@ export class TracksComponent implements OnInit {
     })
   }
 
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -94,5 +94,4 @@ export class TracksComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }
