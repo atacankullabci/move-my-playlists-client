@@ -44,7 +44,9 @@ export class AppComponent implements OnInit {
 
   mediaContents: IMediaContent[];
   playlists: IPlaylist[];
+  selectedGenreList: string[] = [];
   displayedColumns: string[] = ['trackName', 'artistName', 'albumName', 'genre'];
+  chips = [];
 
   dataSource = new MatTableDataSource<MediaContent>();
 
@@ -115,6 +117,7 @@ export class AppComponent implements OnInit {
               this.isMediaContentReceived = this.trackOption;
               this.showSpinnerOverlay = false;
               this.contentBadge = this.mediaContents.length;
+              this.genreChips(this.mediaContents);
             }
             if (this.playlists) {
               this.playlistReceived = true;
@@ -156,6 +159,32 @@ export class AppComponent implements OnInit {
       .subscribe((response) => {
         this.isUserInProgress = response.body;
       })
+  }
+
+  genreChips(mediaContents: IMediaContent[]) {
+    let set = new Set<string>();
+    mediaContents.forEach((mediaContent) => {
+      if (mediaContent.genre !== ' ') {
+        set.add(mediaContent.genre);
+      }
+    })
+    const genreList: Set<String> = set;
+
+    genreList.forEach((genre) => {
+      this.chips.push({state: false, name: genre})
+    })
+  }
+
+  chipSelected(event) {
+    const chipName = event.source.value;
+    if (event.selected) {
+      this.selectedGenreList.push(chipName);
+    } else {
+      const index = this.selectedGenreList.indexOf(chipName, 0);
+      this.selectedGenreList.splice(index, 1);
+    }
+
+    console.log(this.selectedGenreList);
   }
 
   onTabClick(event: MatTabChangeEvent) {

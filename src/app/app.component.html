@@ -117,6 +117,18 @@
       </mat-card-actions>
     </mat-card>
 
+    <mat-chip-list aria-label="Genre List" multiple style="display: none">
+      <mat-chip
+        color="accent"
+        [selectable]="true"
+        (selectionChange)="chipSelected($event)"
+        [selected]="chip.state"
+        (click)="chip.state=!chip.state"
+        *ngFor="let chip of chips">
+        {{chip.name}}
+      </mat-chip>
+    </mat-chip-list>
+
     <mat-card class="mat-elevation-z8 card" *ngIf="migrationCompleted">
       <mat-card-title>
         You have been started migration of {{this.mediaContents.length}} tracks
