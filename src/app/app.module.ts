@@ -35,6 +35,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatChipsModule} from "@angular/material/chips";
+import {TracksComponent} from './tracks/tracks.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {MatChipsModule} from "@angular/material/chips";
     DialogComponent,
     DisclaimerDialogComponent,
     InProgressDialogComponent,
-    PlaylistComponent
+    PlaylistComponent,
+    TracksComponent
   ],
   imports: [
     BrowserModule,

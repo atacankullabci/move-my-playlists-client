@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject} from "rxjs";
 import {IPlaylist} from "./shared/playlist.model";
+import {IMediaContent} from "./shared/media-content.model";
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +10,22 @@ import {IPlaylist} from "./shared/playlist.model";
 export class FileService {
 
   private playlist = new BehaviorSubject<IPlaylist[]>([]);
+  private tracks = new BehaviorSubject<IMediaContent[]>([]);
 
-  setMediaContents(content) {
+  setPlaylists(content) {
     this.playlist.next(content);
   }
 
-  getMediaContents() {
+  getPlaylists() {
     return this.playlist.asObservable();
+  }
+
+  setMediaContent(content) {
+    this.tracks.next(content);
+  }
+
+  getMediaContent() {
+    return this.tracks.asObservable();
   }
 
   constructor(private http: HttpClient) {

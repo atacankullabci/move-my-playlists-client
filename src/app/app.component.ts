@@ -1,15 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FileService} from "./file.service";
 import {IpService} from "./ip.service";
-import {IMediaContent, MediaContent} from "./shared/media-content.model";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatTableDataSource} from "@angular/material/table";
-import {MatSort} from "@angular/material/sort";
+import {IMediaContent} from "./shared/media-content.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {IUserInfo} from "./shared/user-info.model";
 import {UserService} from "./user.service";
 import {MatDialog} from "@angular/material/dialog";
-import {DialogComponent} from "./shared/dialog/dialog.component";
 import {MatTabChangeEvent} from "@angular/material/tabs";
 import {InProgressDialogComponent} from "./shared/in-progress-dialog/in-progress-dialog.component";
 import {IPlaylist} from "./shared/playlist.model";
@@ -34,7 +30,6 @@ export class AppComponent implements OnInit {
   userId: string;
 
   isUserValid: boolean = false;
-  migrationCompleted: boolean = false;
   isUserInProgress: boolean = false;
   playlistOption: boolean = false;
   trackOption: boolean = false;
@@ -44,21 +39,13 @@ export class AppComponent implements OnInit {
 
   mediaContents: IMediaContent[];
   playlists: IPlaylist[];
-  selectedGenreList: string[] = [];
-  displayedColumns: string[] = ['trackName', 'artistName', 'albumName', 'genre'];
-  chips = [];
-
-  dataSource = new MatTableDataSource<MediaContent>();
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private fileService: FileService,
               private ipService: IpService,
               private userService: UserService,
-              public dialog: MatDialog,
+              private dialog: MatDialog,
               private snackBar: MatSnackBar) {
   }
 
@@ -92,12 +79,6 @@ export class AppComponent implements OnInit {
       });
   }
 
-  prepareTable() {
-    this.dataSource = new MatTableDataSource(this.mediaContents);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   parseSelections() {
     this.mediaContentCanBeAdded = this.playlistOption || this.trackOption;
   }
@@ -117,15 +98,14 @@ export class AppComponent implements OnInit {
               this.isMediaContentReceived = this.trackOption;
               this.showSpinnerOverlay = false;
               this.contentBadge = this.mediaContents.length;
-              this.genreChips(this.mediaContents);
+              this.fileService.setMediaContent(this.mediaContents);
             }
             if (this.playlists) {
               this.playlistReceived = true;
               this.showSpinnerOverlay = false;
               this.playlistBadge = this.playlists.length;
-              this.fileService.setMediaContents(this.playlists);
+              this.fileService.setPlaylists(this.playlists);
             }
-            this.prepareTable();
           }, (error: any) => {
             this.showSpinnerOverlay = false;
             this.snackBar.open(error.error.message, null, {
@@ -136,24 +116,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-  migrate() {
-    const dialogRef = this.dialog.open(DialogComponent);
-
-    dialogRef.afterClosed()
-      .subscribe((res) => {
-        if (res) {
-          this.showSpinnerOverlay = true;
-          this.fileService.migrateTracks(this.userId)
-            .subscribe((resp) => {
-              if (resp) {
-                this.migrationCompleted = true;
-                this.showSpinnerOverlay = false;
-              }
-            });
-        }
-      })
-  }
-
   checkUserProgress() {
     this.userService.getUserProgress(this.userId)
       .subscribe((response) => {
@@ -161,41 +123,10 @@ export class AppComponent implements OnInit {
       })
   }
 
-  genreChips(mediaContents: IMediaContent[]) {
-    let set = new Set<string>();
-    mediaContents.forEach((mediaContent) => {
-      if (mediaContent.genre !== ' ') {
-        set.add(mediaContent.genre);
-      }
-    })
-    const genreList: Set<String> = set;
-
-    genreList.forEach((genre) => {
-      this.chips.push({state: false, name: genre})
-    })
-  }
-
-  chipSelected(event) {
-    const chipName = event.source.value;
-    if (event.selected) {
-      this.selectedGenreList.push(chipName);
-    } else {
-      const index = this.selectedGenreList.indexOf(chipName, 0);
-      this.selectedGenreList.splice(index, 1);
-    }
-
-    console.log(this.selectedGenreList);
-  }
-
   onTabClick(event: MatTabChangeEvent) {
     if (event.index === 1) {
       this.checkUserProgress();
     }
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   goToAuthPage() {
