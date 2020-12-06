@@ -66,6 +66,6 @@ export class FileService {
       'id': id
     });
 
-    return this.http.post(dev, playlist, {headers: headers});
+    return this.http.post<IPlaylist[]>(dev, playlist, {headers: headers});
   }
 }

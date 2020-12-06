@@ -1,0 +1,4 @@
+.my-headers-align .mat-expansion-panel-header-title,
+.my-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}

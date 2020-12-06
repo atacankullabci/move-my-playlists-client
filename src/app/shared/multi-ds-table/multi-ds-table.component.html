@@ -1,19 +1,24 @@
 <div class="mat-elevation-z8" style="margin: 30px">
-  <mat-accordion>
+  <mat-accordion class="my-headers-align">
     <mat-expansion-panel *ngFor="let item of playlist"
                          (opened)="panelOpened(item.name)">
       <mat-expansion-panel-header>
-        <mat-checkbox *ngIf="withCheckBoxHeader"
-                      color="accent"
-                      (change)="playlistChecked(item, $event)"
-                      (click)="$event.stopPropagation()"
-                      (keydown)="$event.stopPropagation()"
-                      [disabled]="migrationStarted">
-          {{item.name}}
-        </mat-checkbox>
-        <div *ngIf="!withCheckBoxHeader">
-          {{item.name}}
-        </div>
+        <mat-panel-title>
+          <mat-checkbox *ngIf="withCheckBoxHeader"
+                        color="accent"
+                        (change)="playlistChecked(item, $event)"
+                        (click)="$event.stopPropagation()"
+                        (keydown)="$event.stopPropagation()"
+                        [disabled]="migrationStarted">
+            {{item.name}}
+          </mat-checkbox>
+          <div *ngIf="!withCheckBoxHeader">
+            {{item.name}}
+          </div>
+        </mat-panel-title>
+        <mat-panel-description class="right-aligned">
+          {{item.mediaContents.length}} track<span *ngIf="item.mediaContents.length > 1">s</span>
+        </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-form-field>
         <mat-label>Search</mat-label>
