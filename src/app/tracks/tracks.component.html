@@ -60,6 +60,14 @@
   </mat-chip>
 </mat-chip-list>
 
+<div *ngIf="transferType === 'playlist'">
+  <app-multi-ds-table *ngIf="selectedPlaylists.length > 0"
+                      [userId]="userId"
+                      [playlist]="selectedPlaylists"
+                      [withCheckBoxHeader]="false">
+  </app-multi-ds-table>
+</div>
+
 <div *ngIf="transferType === 'track'">
   <mat-form-field>
     <mat-label>Search</mat-label>
