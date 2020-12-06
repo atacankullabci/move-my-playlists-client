@@ -12,31 +12,31 @@ export class UserService {
   }
 
   getRandomState() {
-    const dev = 'http://localhost:8080/api/state';
-    //const prod = 'https://movemyplaylists.com/api/state';
+    //const dev = 'http://localhost:8080/api/state';
+    const prod = 'https://movemyplaylists.com/api/state';
 
-    return this.http.get(dev, {responseType: 'text'});
+    return this.http.get(prod, {responseType: 'text'});
   }
 
   checkUser(userId: string) {
-    const dev = 'http://localhost:8080/api/users';
-    //const prod = 'https://movemyplaylists.com/api/users';
+    //const dev = 'http://localhost:8080/api/users';
+    const prod = 'https://movemyplaylists.com/api/users';
 
     const headers = new HttpHeaders({
       'id': userId
     });
 
-    return this.http.get<IUserInfo>(dev, {headers: headers, observe: 'response'});
+    return this.http.get<IUserInfo>(prod, {headers: headers, observe: 'response'});
   }
 
   getUserProgress(userId: string): Observable<HttpResponse<boolean>> {
-    const dev = 'http://localhost:8080/api/progress';
-    //const prod = 'https://movemyplaylists.com/api/progress';
+    //const dev = 'http://localhost:8080/api/progress';
+    const prod = 'https://movemyplaylists.com/api/progress';
 
     const headers = new HttpHeaders({
       'id': userId
     });
 
-    return this.http.get<boolean>(dev, {headers: headers, observe: 'response'});
+    return this.http.get<boolean>(prod, {headers: headers, observe: 'response'});
   }
 }

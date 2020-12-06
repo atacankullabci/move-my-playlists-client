@@ -28,6 +28,6 @@ export class HeaderComponent implements OnInit {
   }
 
   reloadPage() {
-    window.location.reload();
+    window.location.href = 'https://movemyplaylists.com';
   }
 }
