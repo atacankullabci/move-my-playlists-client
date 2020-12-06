@@ -37,6 +37,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatChipsModule} from "@angular/material/chips";
 import {TracksComponent} from './tracks/tracks.component';
 import {MatRadioModule} from "@angular/material/radio";
+import {MultiDsTableComponent} from './shared/multi-ds-table/multi-ds-table.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {MatRadioModule} from "@angular/material/radio";
     DisclaimerDialogComponent,
     InProgressDialogComponent,
     PlaylistComponent,
-    TracksComponent
+    TracksComponent,
+    MultiDsTableComponent
   ],
   imports: [
     BrowserModule,

@@ -6,7 +6,8 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {DialogComponent} from "../shared/dialog/dialog.component";
 import {MatDialog} from "@angular/material/dialog";
-import {IPlaylist} from "../shared/playlist.model";
+import {IPlaylist, Playlist} from "../shared/playlist.model";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-tracks',
@@ -27,13 +28,14 @@ export class TracksComponent implements OnInit {
 
   dataSource = new MatTableDataSource<MediaContent>();
   displayedColumns: string[] = ['trackName', 'artistName', 'albumName', 'genre'];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   migrationCompleted: boolean = false;
 
   constructor(private fileService: FileService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -47,48 +49,10 @@ export class TracksComponent implements OnInit {
       });
   }
 
-  migrate() {
-    const dialogRef = this.dialog.open(DialogComponent);
-
-    dialogRef.afterClosed()
-      .subscribe((res) => {
-        if (res) {
-          this.migrationCompleted = true;
-          this.fileService.migrateTracks(this.userId)
-            .subscribe((resp) => {
-              if (resp) {
-                this.migrationCompleted = false;
-              }
-            });
-        }
-      })
-  }
-
-  chipSelected(event) {
-    this.dataSource.filter = '';
-
-    const chipName = event.source.value;
-    if (event.selected) {
-      this.selectedGenreList.push(chipName);
-      this.populatePlaylists(chipName);
-    } else {
-      const index = this.selectedGenreList.indexOf(chipName, 0);
-      this.selectedGenreList.splice(index, 1);
-      this.selectedPlaylists.splice(index, 1);
-    }
-    console.log(this.selectedPlaylists);
-  }
-
-  populatePlaylists(genre: string) {
-    this.dataSource.filter = genre;
-    this.playlistSelected();
-    this.selectedPlaylists.push({name: genre, mediaContents: this.dataSource.filteredData});
-  }
-
   genreChips(mediaContents: IMediaContent[]) {
     let set = new Set<string>();
     mediaContents.forEach((mediaContent) => {
-      if (mediaContent.genre !== ' ') {
+      if (mediaContent.genre.trim().length > 0) {
         set.add(mediaContent.genre);
       }
     })
@@ -97,6 +61,66 @@ export class TracksComponent implements OnInit {
     genreList.forEach((genre) => {
       this.chips.push({state: false, name: genre})
     })
+  }
+
+  migrate() {
+    const dialogRef = this.dialog.open(DialogComponent);
+
+    dialogRef.afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.migrationCompleted = true;
+          if (this.transferType === 'track') {
+            this.fileService.migrateTracks(this.userId)
+              .subscribe((resp) => {
+                if (resp) {
+                  this.migrationCompleted = false;
+                }
+              });
+          } else if (this.transferType === 'playlist') {
+            this.fileService.migratePlaylists(this.userId, this.selectedPlaylists)
+              .subscribe((resp) => {
+                this.migrationCompleted = false;
+              }, (error => {
+                this.snackBar.open(error.error.message, null, {
+                  duration: 3000
+                });
+                this.migrationCompleted = false;
+              }));
+          }
+        }
+      })
+  }
+
+  chipSelected(event) {
+    this.dataSource.filter = '';
+
+    const chipName = event.source.value.trim();
+    if (chipName.length > 0) {
+      if (event.selected) {
+        this.selectedGenreList.push(chipName);
+        this.populatePlaylists(chipName);
+      } else {
+        const index = this.selectedGenreList.indexOf(chipName, 0);
+        this.selectedGenreList.splice(index, 1);
+        this.selectedPlaylists.splice(index, 1);
+      }
+    }
+  }
+
+  populatePlaylists(genre: string) {
+    this.selectedPlaylists.push(this.getPlaylistByGenre(genre, this.mediaContents));
+  }
+
+  getPlaylistByGenre(searchedGenre: string, mediaContentList: IMediaContent[]): IPlaylist {
+    let mediaContents: IMediaContent[] = [];
+
+    for (let mediaContent of mediaContentList) {
+      if (mediaContent.genre.trim().toLowerCase() === searchedGenre.trim().toLowerCase()) {
+        mediaContents.push(mediaContent);
+      }
+    }
+    return new Playlist(searchedGenre, mediaContents);
   }
 
   selectTransferType(event) {

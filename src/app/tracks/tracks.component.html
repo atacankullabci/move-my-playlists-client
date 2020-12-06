@@ -4,8 +4,9 @@
   </mat-card-header>
   <mat-card-content>
     <p>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;App is going to add all the tracks in your library
-      into Spotify 'Liked Songs' tab.
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Please choose between two options. You can transfer all your tracks to the Spotify
+      'Liked Songs' tab
+      or you can create playlists by track genres and transfer these playlists to the Spotify.
     </p>
   </mat-card-content>
 
@@ -18,7 +19,8 @@
           Migrate All Tracks
         </mat-radio-button>
         <mat-radio-button value="playlist"
-                          matTooltip="Creates playlists according to the selected genres">
+                          matTooltip="Creates playlists according to the selected genres"
+                          (click)="playlistSelected()">
           Create Playlists by Genre
         </mat-radio-button>
       </mat-radio-group>
@@ -36,8 +38,12 @@
 </mat-card>
 
 <mat-card class="mat-elevation-z8 card" *ngIf="migrationCompleted">
-  <mat-card-title>
-    You have been started migration of {{this.mediaContents.length}} tracks
+  <mat-card-title *ngIf="transferType === 'track'">
+    You have been started migration of {{mediaContents.length}} track<span *ngIf="mediaContents.length>1">s</span>
+  </mat-card-title>
+  <mat-card-title *ngIf="transferType === 'playlist'">
+    You have been started migration of {{selectedPlaylists.length}} playlist<span
+    *ngIf="selectedPlaylists.length>1">s</span>
   </mat-card-title>
   <mat-card-content>
     <p>
@@ -60,7 +66,15 @@
   </mat-chip>
 </mat-chip-list>
 
-<div *ngIf="transferType === 'track'">
+<div *ngIf="transferType === 'playlist'">
+  <app-multi-ds-table *ngIf="selectedPlaylists.length > 0"
+                      [userId]="userId"
+                      [playlist]="selectedPlaylists"
+                      [withCheckBoxHeader]="false">
+  </app-multi-ds-table>
+</div>
+
+<div [hidden]="transferType !== 'track'">
   <mat-form-field>
     <mat-label>Search</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Fleetwood Mac" #input>
