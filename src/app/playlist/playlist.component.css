@@ -3,3 +3,18 @@
   margin: 30px auto auto auto;
   padding: 25px;
 }
+
+.mat-card-content {
+  padding-top: 25px;
+  padding-bottom: 0px !important;
+  text-indent: 25px;
+}
+
+@media screen and (max-width: 767px) {
+  .mat-card-content {
+    font-size: small;
+    padding-top: 25px;
+    padding-bottom: 0px !important;
+    text-indent: 25px;
+  }
+}

@@ -15,3 +15,17 @@ mat-icon {
   height: 100px;
   width: 100px
 }
+
+@media screen and (max-width: 600px) {
+  .card {
+    width: 75%;
+  }
+
+  .card .mat-list-item {
+    font-size: small;
+  }
+
+  :host /deep/ .mat-list-item-content {
+    padding: 0 !important;
+  }
+}

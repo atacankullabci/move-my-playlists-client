@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FileService} from "./file.service";
 import {IpService} from "./ip.service";
 import {IMediaContent} from "./shared/media-content.model";
@@ -15,7 +15,8 @@ import {REDIRECT_URI, SPOTIFY_CLIENT_ID, USER_SCOPES} from './app.constants';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
 

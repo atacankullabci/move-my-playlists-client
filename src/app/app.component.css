@@ -95,3 +95,48 @@ body {
   margin-right: auto;
   max-width: 380px;
 }
+
+@media screen and (max-width: 767px) {
+  /*intro*/
+  .intro-card {
+    width: 75%;
+  }
+
+  .intro-card mat-card-title {
+    font-size: large;
+  }
+
+  /*cards*/
+  .card {
+    width: 90% !important;
+    box-shadow: none !important;
+    margin: 15px !important;
+    padding: 0px !important;
+  }
+
+  .card mat-card-title {
+    font-size: small;
+  }
+
+  .card mat-card-actions button {
+    font-size: small;
+  }
+
+  .mat-tab-group {
+    margin: 0 !important;
+  }
+
+  .mat-tab-label {
+    font-size: x-small;
+    padding: 5px !important;
+  }
+
+  .mat-card-content .mat-list-item {
+    font-size: small;
+  }
+
+}
+
+@media screen and(max-width: 768px) {
+
+}

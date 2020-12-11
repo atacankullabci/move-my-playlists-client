@@ -35,8 +35,8 @@
   </mat-card>
 </div>
 
-<mat-tab-group dynamicHeight (selectedTabChange)="onTabClick($event)" *ngIf="!introPageShowed">
-  <mat-tab label="Authorize the App on Spotify">
+<mat-tab-group dynamicHeight (selectedTabChange)="onTabClick($event)" *ngIf="!introPageShowed" mat-stretch-tabs>
+  <mat-tab label="Authorize the App">
     <app-user-info *ngIf="isUserValid" [userInfo]="userInfo"></app-user-info>
     <mat-card *ngIf="!isUserValid" class="mat-elevation-z8 card">
       <mat-card-title>
@@ -47,11 +47,13 @@
       </mat-card-actions>
     </mat-card>
   </mat-tab>
-  <mat-tab label="Import your iTunes Library" [disabled]="!isUserValid">
+  <mat-tab label="Import your Library" [disabled]="!isUserValid">
     <mat-card class="mat-elevation-z8 card">
-      <mat-card-title>
-        Upload your iTunes library
-      </mat-card-title>
+      <mat-card-header>
+        <mat-card-title>
+          Upload your iTunes library
+        </mat-card-title>
+      </mat-card-header>
       <mat-divider></mat-divider>
       <mat-card-content>
         <mat-list>
@@ -97,7 +99,7 @@
             matBadge="{{contentBadge}}"
             class="stretch-badge"
             matBadgeOverlap="false"
-            [matBadgeHidden]="!isMediaContentReceived">Tracks in Your Library</span>
+            [matBadgeHidden]="!isMediaContentReceived">Your Tracks</span>
     </ng-template>
 
     <app-tracks [userId]="userId"></app-tracks>
@@ -108,7 +110,7 @@
             matBadge="{{playlistBadge}}"
             class="stretch-badge"
             matBadgeOverlap="false"
-            [matBadgeHidden]="playlistBadge === 0">Playlists in Your Library</span>
+            [matBadgeHidden]="playlistBadge === 0">Your Playlists</span>
     </ng-template>
     <app-playlist [userId]="userId"></app-playlist>
   </mat-tab>

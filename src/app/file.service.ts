@@ -32,8 +32,8 @@ export class FileService {
   }
 
   sendFile(fileContent: File, clientIp: string, id: string, playlistOption: string) {
-    //const dev = 'http://localhost:8080/api/map';
-    const prod = 'https://movemyplaylists.com/api/map';
+    const dev = 'http://localhost:8080/api/map';
+    //const prod = 'https://movemyplaylists.com/api/map';
 
     const headers = new HttpHeaders({
       'client-ip': clientIp,
@@ -44,28 +44,28 @@ export class FileService {
     const formData: FormData = new FormData();
     formData.append('file', fileContent);
 
-    return this.http.post<any>(prod, formData, {headers: headers});
+    return this.http.post<any>(dev, formData, {headers: headers});
   }
 
   migrateTracks(id: string) {
-    //const dev = 'http://localhost:8080/api/migrate/tracks';
-    const prod = 'https://movemyplaylists.com/api/migrate/tracks';
+    const dev = 'http://localhost:8080/api/migrate/tracks';
+    //const prod = 'https://movemyplaylists.com/api/migrate/tracks';
 
     const headers = new HttpHeaders({
       'id': id
     });
 
-    return this.http.post<boolean>(prod, null, {headers: headers});
+    return this.http.post<boolean>(dev, null, {headers: headers});
   }
 
   migratePlaylists(id: string, playlist: IPlaylist[]) {
-    //const dev = 'http://localhost:8080/api/migrate/playlists';
-    const prod = 'https://movemyplaylists.com/api/migrate/playlists';
+    const dev = 'http://localhost:8080/api/migrate/playlists';
+    //const prod = 'https://movemyplaylists.com/api/migrate/playlists';
 
     const headers = new HttpHeaders({
       'id': id
     });
 
-    return this.http.post<IPlaylist[]>(prod, playlist, {headers: headers});
+    return this.http.post<IPlaylist[]>(dev, playlist, {headers: headers});
   }
 }

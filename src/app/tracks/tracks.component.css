@@ -7,3 +7,52 @@
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 16px;
 }
+
+.mat-card-content {
+  padding-top: 25px;
+  padding-bottom: 0px !important;
+  text-indent: 25px;
+}
+
+@media screen and (max-width: 767px) {
+  .mat-card-content {
+    font-size: small;
+    padding-top: 25px;
+    padding-bottom: 0px !important;
+    text-indent: 25px;
+  }
+
+  .mat-list .mat-radio-group {
+    font-size: small;
+  }
+
+  .mat-list {
+    padding-top: 0px !important;
+  }
+
+  .mat-chip-list .mat-chip {
+    font-size: small;
+    margin: 2px;
+  }
+
+  :host /deep/ .mat-list-item-content {
+    padding: 0 !important;
+  }
+
+  :host /deep/ .mat-chip-list-wrapper {
+    padding: 10px;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0 5px 0px !important;
+  }
+
+  :host /deep/ .mat-expansion-panel-header {
+    font-size: small;
+  }
+
+  :host /deep/ .mat-expansion-panel-body {
+    padding: 0 5px !important;
+  }
+}
+
