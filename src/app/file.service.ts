@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject} from "rxjs";
 import {IPlaylist} from "./shared/playlist.model";
 import {IMediaContent} from "./shared/media-content.model";
-import {LOCAL_SERVICE_URL} from "./app.constants";
+import {PROD_SERVICE_URL} from "./app.constants";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,8 @@ export class FileService {
   private playlist = new BehaviorSubject<IPlaylist[]>([]);
   private tracks = new BehaviorSubject<IMediaContent[]>([]);
 
-  private serviceUrl = LOCAL_SERVICE_URL;
+  //private serviceUrl = LOCAL_SERVICE_URL;
+  private serviceUrl = PROD_SERVICE_URL;
 
   setPlaylists(content) {
     this.playlist.next(content);

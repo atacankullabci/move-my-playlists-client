@@ -79,7 +79,23 @@ export class TracksComponent implements OnInit {
               });
           } else if (this.transferType === 'playlist') {
             this.fileService.migratePlaylists(this.userId, this.selectedPlaylists)
-              .subscribe((resp) => {
+              .subscribe((responsePlaylists) => {
+                const playlistNames = responsePlaylists.map(pl => pl.name.trim());
+                const chipNames = this.chips.map(content => content.name.trim());
+                const leftOverGenres = chipNames.filter(genre => playlistNames.indexOf(genre) < 0);
+                this.chips = [];
+                for (let lefOver of leftOverGenres) {
+                  this.chips.push({state: false, name: lefOver})
+                }
+
+                this.snackBar.open(playlistNames.length > 1 ?
+                  "Following playlists have been transferred : " + playlistNames :
+                  "Following playlist has been transferred : " + playlistNames,
+                  null,
+                  {duration: 3000});
+
+                this.selectedPlaylists = [];
+                this.selectedGenreList = [];
                 this.migrationCompleted = false;
               }, (error => {
                 this.snackBar.open(error.error.message, null, {
@@ -93,6 +109,7 @@ export class TracksComponent implements OnInit {
   }
 
   chipSelected(event) {
+    debugger;
     this.dataSource.filter = '';
 
     const chipName = event.source.value.trim();

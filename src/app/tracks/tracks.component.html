@@ -31,7 +31,7 @@
             type="button"
             color="accent"
             (click)="migrate()"
-            [disabled]="!transferSelected">Start Migration
+            [disabled]="selectedPlaylists.length < 1 && transferType === 'playlist'">Start Migration
     </button>
   </mat-card-actions>
 </mat-card>
@@ -60,7 +60,8 @@
     (selectionChange)="chipSelected($event)"
     [selected]="chip.state"
     (click)="chip.state=!chip.state"
-    *ngFor="let chip of chips">
+    *ngFor="let chip of chips"
+    [disabled]="migrationCompleted">
     {{chip.name}}
   </mat-chip>
 </mat-chip-list>

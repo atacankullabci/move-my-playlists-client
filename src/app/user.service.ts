@@ -2,14 +2,15 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {IUserInfo} from "./shared/user-info.model";
 import {Observable} from "rxjs";
-import {LOCAL_SERVICE_URL} from "./app.constants";
+import {PROD_SERVICE_URL} from "./app.constants";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private serviceUrl = LOCAL_SERVICE_URL;
+  //private serviceUrl = LOCAL_SERVICE_URL;
+  private serviceUrl = PROD_SERVICE_URL;
 
   constructor(private http: HttpClient) {
   }
