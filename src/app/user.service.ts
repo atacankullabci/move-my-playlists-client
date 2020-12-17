@@ -2,41 +2,42 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {IUserInfo} from "./shared/user-info.model";
 import {Observable} from "rxjs";
+import {PROD_SERVICE_URL} from "./app.constants";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+  //private serviceUrl = LOCAL_SERVICE_URL;
+  private serviceUrl = PROD_SERVICE_URL;
+
   constructor(private http: HttpClient) {
   }
 
   getRandomState() {
-    //const dev = 'http://localhost:8080/api/state';
-    const prod = 'https://movemyplaylists.com/api/state';
+    const url = this.serviceUrl + '/api/state';
 
-    return this.http.get(prod, {responseType: 'text'});
+    return this.http.get(url, {responseType: 'text'});
   }
 
   checkUser(userId: string) {
-    //const dev = 'http://localhost:8080/api/users';
-    const prod = 'https://movemyplaylists.com/api/users';
+    const url = this.serviceUrl + '/api/users';
 
     const headers = new HttpHeaders({
       'id': userId
     });
 
-    return this.http.get<IUserInfo>(prod, {headers: headers, observe: 'response'});
+    return this.http.get<IUserInfo>(url, {headers: headers, observe: 'response'});
   }
 
   getUserProgress(userId: string): Observable<HttpResponse<boolean>> {
-    //const dev = 'http://localhost:8080/api/progress';
-    const prod = 'https://movemyplaylists.com/api/progress';
+    const url = this.serviceUrl + '/api/progress';
 
     const headers = new HttpHeaders({
       'id': userId
     });
 
-    return this.http.get<boolean>(prod, {headers: headers, observe: 'response'});
+    return this.http.get<boolean>(url, {headers: headers, observe: 'response'});
   }
 }

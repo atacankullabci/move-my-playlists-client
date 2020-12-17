@@ -8,6 +8,7 @@ import {MatCheckboxChange} from "@angular/material/checkbox";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../shared/dialog/dialog.component";
 import {ActivatedRoute} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-playlist',
@@ -27,7 +28,8 @@ export class PlaylistComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private fileService: FileService,
-              public dialog: MatDialog) {
+              private dialog: MatDialog,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -53,7 +55,24 @@ export class PlaylistComponent implements OnInit {
         if (res) {
           this.migrationStarted = true;
           this.fileService.migratePlaylists(this.userId, this.checkedPlaylists)
-            .subscribe(() => {
+            .subscribe((responsePlaylists) => {
+              for (let pl of responsePlaylists) {
+                const index = this.findIndex(this.playlist, pl.name);
+                this.playlist.splice(index, 1);
+                this.checkedPlaylists = [];
+              }
+              this.migrationStarted = false;
+
+              const playlistNames = responsePlaylists.map(pl => pl.name);
+              this.snackBar.open(playlistNames.length > 1 ?
+                "Following playlists have been transferred : " + playlistNames :
+                "Following playlist has been transferred : " + playlistNames,
+                null,
+                {duration: 3000});
+            }, error => {
+              this.snackBar.open(error.error.message, null, {
+                duration: 3000
+              });
               this.migrationStarted = false;
             });
         }
