@@ -69,6 +69,11 @@ export class PlaylistComponent implements OnInit {
                 "Following playlist has been transferred : " + playlistNames,
                 null,
                 {duration: 3000});
+            }, error => {
+              this.snackBar.open(error.error.message, null, {
+                duration: 3000
+              });
+              this.migrationStarted = false;
             });
         }
       })
