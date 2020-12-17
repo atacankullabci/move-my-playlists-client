@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject} from "rxjs";
 import {IPlaylist} from "./shared/playlist.model";
 import {IMediaContent} from "./shared/media-content.model";
+import {LOCAL_SERVICE_URL} from "./app.constants";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,8 @@ export class FileService {
 
   private playlist = new BehaviorSubject<IPlaylist[]>([]);
   private tracks = new BehaviorSubject<IMediaContent[]>([]);
+
+  private serviceUrl = LOCAL_SERVICE_URL;
 
   setPlaylists(content) {
     this.playlist.next(content);
@@ -32,8 +35,8 @@ export class FileService {
   }
 
   sendFile(fileContent: File, clientIp: string, id: string, playlistOption: string) {
-    //const dev = 'http://localhost:8080/api/map';
-    const prod = 'https://movemyplaylists.com/api/map';
+    debugger;
+    const url = this.serviceUrl + '/api/map';
 
     const headers = new HttpHeaders({
       'client-ip': clientIp,
@@ -44,28 +47,26 @@ export class FileService {
     const formData: FormData = new FormData();
     formData.append('file', fileContent);
 
-    return this.http.post<any>(prod, formData, {headers: headers});
+    return this.http.post<any>(url, formData, {headers: headers});
   }
 
   migrateTracks(id: string) {
-    //const dev = 'http://localhost:8080/api/migrate/tracks';
-    const prod = 'https://movemyplaylists.com/api/migrate/tracks';
+    const url = this.serviceUrl + '/api/migrate/tracks';
 
     const headers = new HttpHeaders({
       'id': id
     });
 
-    return this.http.post<boolean>(prod, null, {headers: headers});
+    return this.http.post<boolean>(url, null, {headers: headers});
   }
 
   migratePlaylists(id: string, playlist: IPlaylist[]) {
-    //const dev = 'http://localhost:8080/api/migrate/playlists';
-    const prod = 'https://movemyplaylists.com/api/migrate/playlists';
+    const url = this.serviceUrl + '/api/migrate/playlists';
 
     const headers = new HttpHeaders({
       'id': id
     });
 
-    return this.http.post<IPlaylist[]>(prod, playlist, {headers: headers});
+    return this.http.post<IPlaylist[]>(url, playlist, {headers: headers});
   }
 }
