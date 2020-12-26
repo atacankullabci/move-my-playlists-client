@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FileService} from "./file.service";
-import {IpService} from "./ip.service";
 import {IMediaContent} from "./shared/media-content.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {IUserInfo} from "./shared/user-info.model";
@@ -25,7 +24,6 @@ export class AppComponent implements OnInit {
   mediaContentCanBeAdded = false;
   isMediaContentReceived = false;
   showSpinnerOverlay = false;
-  clientIP: string;
   contentBadge = 0;
   playlistBadge = 0;
   userId: string;
@@ -44,7 +42,6 @@ export class AppComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private fileService: FileService,
-              private ipService: IpService,
               private userService: UserService,
               private dialog: MatDialog,
               private snackBar: MatSnackBar) {
@@ -73,11 +70,6 @@ export class AppComponent implements OnInit {
           });
       }
     });
-
-    this.ipService.getIPAddress()
-      .subscribe((response: any) => {
-        this.clientIP = response.ip;
-      });
   }
 
   parseSelections() {
@@ -91,7 +83,7 @@ export class AppComponent implements OnInit {
       this.showSpinnerOverlay = true;
       const file = (event.target as HTMLInputElement).files[0];
       if (this.userId) {
-        this.fileService.sendFile(file, this.clientIP, this.userId, this.playlistOption.toString())
+        this.fileService.sendFile(file, this.userId, this.playlistOption.toString())
           .subscribe((response: any) => {
             this.mediaContents = response[0];
             this.playlists = response[1];
