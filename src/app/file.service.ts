@@ -35,12 +35,11 @@ export class FileService {
   constructor(private http: HttpClient) {
   }
 
-  sendFile(fileContent: File, clientIp: string, id: string, playlistOption: string) {
+  sendFile(fileContent: File, id: string, playlistOption: string) {
     debugger;
     const url = this.serviceUrl + '/api/map';
 
     const headers = new HttpHeaders({
-      'client-ip': clientIp,
       'id': id,
       'parse-playlist': playlistOption
     });
